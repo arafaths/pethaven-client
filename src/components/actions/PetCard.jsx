@@ -11,6 +11,7 @@ import {
   Rabbit,
 } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const PetCard = ({ pet }) => {
   const isAdopted = pet.status === 'adopted';
@@ -91,11 +92,15 @@ const PetCard = ({ pet }) => {
 
         {/* Buttons */}
         <div className="grid grid-cols-2 gap-3 mt-auto">
-          <button className="py-2 px-4 rounded-xl border border-gray-700 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-300">
+          <Link
+            href={`/all-pets/${pet._id}`}
+            className="py-2 px-4 rounded-xl border border-gray-700 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-300 text-center"
+          >
             View Details
-          </button>
+          </Link>
 
-          <button
+          <Link
+            href={`/all-pets/${pet._id}`}
             disabled={isAdopted}
             className={`py-2 rounded-xl font-medium flex items-center justify-center gap-2 transition-all duration-300 ${
               isAdopted
@@ -105,7 +110,7 @@ const PetCard = ({ pet }) => {
           >
             {isAdopted ? 'Unavailable' : 'Adopt Now'}
             {!isAdopted && <ArrowRight className="w-4 h-4" />}
-          </button>
+          </Link>
         </div>
       </div>
     </div>

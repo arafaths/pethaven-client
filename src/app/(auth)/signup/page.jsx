@@ -39,7 +39,7 @@ const SignupPage = () => {
     const confirmPassword = user.confirmPassword;
 
     const isValidPassword =
-      password.length >= 8 && /[A-Z]/.test(password) && /[a-z]/.test(password);
+      password.length >= 6 && /[A-Z]/.test(password) && /[a-z]/.test(password);
 
     const isMatch = password === confirmPassword;
 
@@ -76,7 +76,7 @@ const SignupPage = () => {
   const confirmPassword = formData.confirmPassword;
 
   const rules = {
-    length: password.length >= 8,
+    length: password.length >= 6,
     uppercase: /[A-Z]/.test(password),
     lowercase: /[a-z]/.test(password),
   };
