@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useState } from 'react';
 import {
   User,
@@ -11,6 +11,8 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { FcGoogle } from 'react-icons/fc';
+import { authClient } from '@/lib/auth-client';
+import { redirect } from 'next/navigation';
 
 const SignupPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -28,11 +30,53 @@ const SignupPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    // রেজিস্ট্রেশন সাবমিট লজিক এখানে হবে
-    console.log('Form Submitted:', formData);
+    const formData = new FormData(e.currentTarget);
+    const user = Object.fromEntries(formData.entries());
+
+    const password = user.password;
+    const confirmPassword = user.confirmPassword;
+
+    const isValidPassword =
+      password.length >= 8 && /[A-Z]/.test(password) && /[a-z]/.test(password);
+
+    const isMatch = password === confirmPassword;
+
+    if (!isValidPassword) {
+      return;
+    }
+    if (!isMatch) {
+      return;
+    }
+
+    const { data, error } = await authClient.signUp.email({
+      name: user.fullName, // required
+      email: user.email, // required
+      password: user.password, // required
+      image: user.photoUrl,
+    });
+
+     if (data) {
+       alert('SignUp successful');
+       redirect('/');
+     }
+     if (error) {
+       alert(error.message);
+     }
   };
+
+  const password = formData.password;
+  const confirmPassword = formData.confirmPassword;
+
+  const rules = {
+    length: password.length >= 8,
+    uppercase: /[A-Z]/.test(password),
+    lowercase: /[a-z]/.test(password),
+  };
+
+  const isConfirmMatch =
+    confirmPassword.length > 0 && password === confirmPassword;
 
   return (
     <div className="min-h-screen bg-[#0B0C10] flex items-center justify-center p-4 selection:bg-[#FF7A00]/30">
@@ -144,37 +188,31 @@ const SignupPage = () => {
               {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           </div>
-
-          {/* Password Strength Section */}
-          <div className="pt-2">
-            <div className="flex justify-between items-center text-xs mb-2">
-              <span className="text-gray-400">Password strength:</span>
-              <span className="text-green-500 font-semibold tracking-wide">
-                Strong
-              </span>
-            </div>
-            {/* Strength Bars */}
-            <div className="grid grid-cols-4 gap-1.5">
-              <div className="h-1 bg-green-500 rounded-full"></div>
-              <div className="h-1 bg-green-500 rounded-full"></div>
-              <div className="h-1 bg-green-500 rounded-full"></div>
-              <div className="h-1 bg-green-500 rounded-full"></div>
-            </div>
-          </div>
+          {confirmPassword.length > 0 && !isConfirmMatch && (
+            <p className="text-red-500 text-xs mt-1">Passwords do not match</p>
+          )}
 
           {/* Requirements Checklist */}
           <div className="space-y-1.5 pt-2 text-xs text-gray-400">
-            <div className="flex items-center gap-2 text-green-500">
+            <div
+              className={`flex items-center gap-2 ${rules.length ? 'text-green-500' : 'text-gray-400'}`}
+            >
               <CheckCircle2 size={14} className="flex-shrink-0" />
               <span>At least 8 characters</span>
             </div>
-            <div className="flex items-center gap-2 text-green-500">
+
+            <div
+              className={`flex items-center gap-2 ${rules.uppercase ? 'text-green-500' : 'text-gray-400'}`}
+            >
               <CheckCircle2 size={14} className="flex-shrink-0" />
-              <span>Includes a number</span>
+              <span>One uppercase letter</span>
             </div>
-            <div className="flex items-center gap-2 text-green-500">
+
+            <div
+              className={`flex items-center gap-2 ${rules.lowercase ? 'text-green-500' : 'text-gray-400'}`}
+            >
               <CheckCircle2 size={14} className="flex-shrink-0" />
-              <span>Includes an uppercase letter</span>
+              <span>One lowercase letter</span>
             </div>
           </div>
 
@@ -201,7 +239,7 @@ const SignupPage = () => {
           type="button"
           className="w-full bg-[#1A1D26] border border-[#262B3C] hover:bg-[#222635] text-white font-medium py-3.5 rounded-xl transition-all flex items-center justify-center gap-3"
         >
-          <FcGoogle size={20}/>
+          <FcGoogle size={20} />
           <span className="text-sm">Sign up with Google</span>
         </button>
 

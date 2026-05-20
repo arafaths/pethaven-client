@@ -1,18 +1,33 @@
-'use client'
+'use client';
 import React, { useState } from 'react';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { FcGoogle } from 'react-icons/fc';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import { authClient } from '@/lib/auth-client';
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    console.log({ email, password, rememberMe });
+    // const formData = new FormData(e.currentTarget);
+    // const user = Object.fromEntries(formData.entries());
+
+    const { data, error } = await authClient.signIn.email({
+      email, // required
+      password, // required
+    });
+console.log('data:', data, 'error:', error)
+    if (data) {
+      alert('Login successful');
+      redirect('/');
+    }
+    if (error) {
+      alert(error.message);
+    }
   };
 
   return (
