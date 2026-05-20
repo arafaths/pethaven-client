@@ -40,7 +40,9 @@ const PetCareTips = () => {
         <div className="flex justify-between items-center mb-10">
           <div className="flex items-center gap-2">
             <span className="text-[#FF7A00] text-xl">🐾</span>
-            <h2 className="text-2xl font-bold tracking-tight">Pet Care Tips</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
+              Pet Care Tips
+            </h2>
           </div>
           <button className="text-sm font-medium border border-[#262B3C] rounded-full px-4 py-1.5 hover:bg-[#12141C] text-gray-300 transition-colors flex items-center gap-1 group">
             View All Articles

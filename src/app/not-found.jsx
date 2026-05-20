@@ -42,15 +42,6 @@ export default function NotFound() {
             <Home size={16} />
             Back to Home
           </Link>
-
-          {/* Go Back Button */}
-          <button
-            onClick={() => window.history.back()}
-            className="bg-[#1A1D26] border border-[#262B3C] hover:bg-[#222635] text-gray-300 font-medium px-6 py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 text-sm"
-          >
-            <ArrowLeft size={16} />
-            Go Back
-          </button>
         </div>
       </div>
 

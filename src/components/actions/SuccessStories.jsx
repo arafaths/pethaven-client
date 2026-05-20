@@ -35,7 +35,7 @@ const SuccessStories = () => {
         <div className="flex justify-between items-center mb-10">
           <div className="flex items-center gap-2">
             <span className="text-[#FF7A00] text-xl">🐾</span>
-            <h2 className="text-2xl font-bold tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
               Success Stories
             </h2>
           </div>

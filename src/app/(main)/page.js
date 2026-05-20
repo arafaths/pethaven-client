@@ -1,4 +1,5 @@
 import Banner from "@/components/actions/Banner";
+import FeaturedPets from "@/components/actions/FeaturedPets";
 import PetCareTips from "@/components/actions/PetCareTips";
 import SuccessStories from "@/components/actions/SuccessStories";
 import WhyAdopt from "@/components/actions/WhyAdopt";
@@ -8,6 +9,7 @@ export default function Home() {
   return (
     <>
       <Banner />
+      <FeaturedPets/>
       <WhyAdopt />
       <SuccessStories />
       <PetCareTips/>

@@ -76,7 +76,7 @@ export default function Navbar() {
             {theme === 'dark' ? (
               <TiWeatherSunny size={20} className="text-yellow-400" />
             ) : (
-              <FiMoon size={18} className="text-gray-700" />
+              <FiMoon size={20} className="text-gray-700" />
             )}
           </button>
 

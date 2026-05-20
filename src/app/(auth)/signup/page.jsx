@@ -36,7 +36,7 @@ const SignupPage = () => {
 
   return (
     <div className="min-h-screen bg-[#0B0C10] flex items-center justify-center p-4 selection:bg-[#FF7A00]/30">
-      <div className="w-full max-w-md bg-[#12141C] border border-[#1F2431] rounded-2xl p-8 shadow-2xl my-8">
+      <div className="w-full max-w-md bg-[#12141C] border border-[#1F2431] rounded-2xl p-8 shadow-2xl">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-white tracking-tight leading-tight">
