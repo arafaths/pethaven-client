@@ -35,14 +35,21 @@ const PetDetails = async ({ params }) => {
     vaccinationStatus,
     adoptionFee,
     ownerEmail,
+    createdAt,
   } = pet;
+
+  const formattedDate = new Date(createdAt).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 
   // User data
   const session = await auth.api.getSession({
     headers: await headers(), // you need to pass the headers object.
   });
   const user = session?.user;
-  console.log(user)
+
   return (
     <div className="min-h-screen bg-[#0B0F19] text-[#E2E8F0] font-sans antialiased selection:bg-orange-500 selection:text-white">
       <div className="max-w-7xl mx-auto px-4 py-3">
@@ -54,7 +61,6 @@ const PetDetails = async ({ params }) => {
 
       {/* Main Grid Layout */}
       <main className="max-w-7xl mx-auto px-4 pb-16 grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* LEFT & CENTER CONTENT (2 Columns on large screens) */}
         <div className="lg:col-span-2 space-y-6">
           {/* Pet Image Banner */}
           <div className="relative rounded-3xl overflow-hidden border border-slate-800 bg-[#111827] aspect-[16/10]">
@@ -73,7 +79,6 @@ const PetDetails = async ({ params }) => {
             </div>
           </div>
 
-          {/* About Section */}
           <section className="bg-[#111827] border border-slate-800/60 rounded-3xl p-6 md:p-8 space-y-4">
             <h2 className="text-2xl font-bold flex items-center gap-2 text-white">
               <Heart className="text-orange-500 fill-orange-500" size={24} />{' '}
@@ -84,7 +89,6 @@ const PetDetails = async ({ params }) => {
             </div>
           </section>
 
-          {/* Pet Information Grid */}
           <section className="bg-[#111827] border border-slate-800/60 rounded-3xl p-6 md:p-8 space-y-6">
             <h2 className="text-2xl font-bold flex items-center gap-2 text-white">
               <Info className="text-orange-500" size={24} /> Pet Information
@@ -141,7 +145,6 @@ const PetDetails = async ({ params }) => {
               ))}
             </div>
 
-            {/* Meta Footer */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-slate-800/60 text-xs text-slate-500">
               <p>
                 Owner Email:{' '}
@@ -149,13 +152,14 @@ const PetDetails = async ({ params }) => {
               </p>
               <p className="sm:text-right">
                 Posted Date:{' '}
-                <span className="text-slate-400 font-medium">May 12, 2026</span>
+                <span className="text-slate-400 font-medium">
+                  {formattedDate}
+                </span>
               </p>
             </div>
           </section>
         </div>
 
-        {/* RIGHT SIDEBAR (Adoption Form & Perks) */}
         <div className="space-y-6">
           <div className="bg-[#111827] border border-slate-800 rounded-3xl p-6 space-y-5 shadow-xl shadow-black/40 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r align-super from-orange-600 to-amber-500"></div>
@@ -209,13 +213,17 @@ const PetDetails = async ({ params }) => {
                 />
               </div>
 
-              {/* Interactive inputs */}
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-slate-300">
                   Pickup Date
                 </label>
                 <input
                   type="date"
+                  min={
+                    pet?.createdAt
+                      ? new Date(pet.createdAt).toISOString().split('T')[0]
+                      : undefined
+                  }
                   className="w-full bg-[#1E293B] border border-slate-700/80 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-orange-500 transition [color-scheme:dark]"
                 />
               </div>
