@@ -20,7 +20,7 @@ const LoginPage = () => {
       email, // required
       password, // required
     });
-console.log('data:', data, 'error:', error)
+
     if (data) {
       alert('Login successful');
       redirect('/');
@@ -28,6 +28,12 @@ console.log('data:', data, 'error:', error)
     if (error) {
       alert(error.message);
     }
+  };
+
+  const handleGoogle = async () => {
+    const data = await authClient.signIn.social({
+      provider: 'google',
+    });
   };
 
   return (
@@ -106,6 +112,7 @@ console.log('data:', data, 'error:', error)
 
         {/* Google Login Button */}
         <button
+          onClick={handleGoogle}
           type="button"
           className="w-full bg-[#1A1D26] border border-[#262B3C] hover:bg-[#222635] text-white font-medium py-3.5 rounded-xl transition-all flex items-center justify-center gap-3"
         >

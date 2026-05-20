@@ -66,6 +66,12 @@ const SignupPage = () => {
      }
   };
 
+  const handleGoogle = async () => {
+    const data = await authClient.signIn.social({
+      provider: 'google',
+    });
+  }
+
   const password = formData.password;
   const confirmPassword = formData.confirmPassword;
 
@@ -236,6 +242,7 @@ const SignupPage = () => {
 
         {/* Google Sign Up Button */}
         <button
+          onClick={handleGoogle}
           type="button"
           className="w-full bg-[#1A1D26] border border-[#262B3C] hover:bg-[#222635] text-white font-medium py-3.5 rounded-xl transition-all flex items-center justify-center gap-3"
         >
