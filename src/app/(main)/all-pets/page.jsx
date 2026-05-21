@@ -1,38 +1,31 @@
-'use client'
+'use client';
 import { useEffect, useState } from 'react';
 import PetCard from '@/components/actions/PetCard';
 import { Search, ChevronDown, SlidersHorizontal } from 'lucide-react';
+import Loading from '@/components/actions/Loading';
 
 const AllPets = () => {
   const [pets, setPets] = useState([]);
-
   const [search, setSearch] = useState('');
-
   const [species, setSpecies] = useState('');
-
   const [sort, setSort] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  // Fetch Pets
-  const fetchPets = async () => {
-    const res = await fetch(
-      `http://localhost:5000/all-pets?search=${search}&species=${species}&sort=${sort}`
-    );
-
-    const data = await res.json();
-
-    setPets(data);
-  };
-
-  // Auto Fetch
   useEffect(() => {
     const timer = setTimeout(() => {
       const loadPets = async () => {
-        const res = await fetch(
-          `http://localhost:5000/all-pets?search=${search}&species=${species}&sort=${sort}`,
-        );
+        try {
+          setLoading(true);
 
-        const data = await res.json();
-        setPets(data);
+          const res = await fetch(
+            `http://localhost:5000/all-pets?search=${search}&species=${species}&sort=${sort}`,
+          );
+
+          const data = await res.json();
+          setPets(data);
+        } finally {
+          setLoading(false);
+        }
       };
 
       loadPets();
@@ -40,7 +33,6 @@ const AllPets = () => {
 
     return () => clearTimeout(timer);
   }, [search, species, sort]);
-
 
   return (
     <section className="min-h-screen bg-[#121212] text-white px-4 py-10">
@@ -88,17 +80,20 @@ const AllPets = () => {
             className="bg-[#1a1a1a] border border-gray-800 rounded-xl px-4 py-3 text-gray-300 outline-none focus:border-orange-500"
           >
             <option value="">Default</option>
-            <option value="newest">Newest</option>
             <option value="low">Low Price</option>
             <option value="high">High Price</option>
           </select>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {pets?.map(pet => (
-            <PetCard key={pet._id} pet={pet} />
-          ))}
-        </div>
+        {loading ? (
+          <Loading />
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {pets?.map(pet => (
+              <PetCard key={pet._id} pet={pet} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
