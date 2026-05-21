@@ -13,6 +13,11 @@ import {
   Activity,
   ShieldCheck,
   DollarSign,
+  PawPrint,
+  Crown,
+  Edit3,
+  Trash2,
+  Users,
 } from 'lucide-react';
 import { headers } from 'next/headers';
 import Image from 'next/image';
@@ -36,7 +41,9 @@ const PetDetails = async ({ params }) => {
     adoptionFee,
     ownerEmail,
     createdAt,
+    isAdopted,
   } = pet;
+  
 
   const formattedDate = new Date(createdAt).toLocaleDateString('en-US', {
     year: 'numeric',
@@ -49,7 +56,7 @@ const PetDetails = async ({ params }) => {
     headers: await headers(), // you need to pass the headers object.
   });
   const user = session?.user;
-
+  const isOwner = user?.email === ownerEmail;
   return (
     <div className="min-h-screen bg-[#0B0F19] text-[#E2E8F0] font-sans antialiased selection:bg-orange-500 selection:text-white">
       <div className="max-w-7xl mx-auto px-4 py-3">
@@ -161,135 +168,157 @@ const PetDetails = async ({ params }) => {
         </div>
 
         <div className="space-y-6">
-          <div className="bg-[#111827] border border-slate-800 rounded-3xl p-6 space-y-5 shadow-xl shadow-black/40 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r align-super from-orange-600 to-amber-500"></div>
+          {isAdopted && (
+            <div className="bg-[#0B0F19] flex items-center justify-center antialiased font-sans">
+              {/* Main Container Card */}
+              <div className="w-full max-w-md bg-[#0F172A]/40 border border-emerald-500/20 backdrop-blur-md rounded-[32px] p-8 md:p-10 text-center shadow-2xl shadow-emerald-950/10 flex flex-col items-center justify-center relative overflow-hidden group">
+                {/* Subtle background glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/5 to-transparent pointer-events-none transition duration-500 group-hover:from-emerald-500/10" />
 
-            <div className="space-y-1">
-              <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                Adoption Request
-              </h3>
-              <p className="text-xs text-slate-400">
-                Please fill out the form below to send an adoption request for
-                Bella.
-              </p>
+                {/* Glowing Paw Icon Wrapper */}
+                <div className="relative w-24 h-24 rounded-full border border-emerald-500/30 flex items-center justify-center bg-emerald-950/30 shadow-[0_0_25px_rgba(16,185,129,0.15)] mb-6 transition duration-300 group-hover:shadow-[0_0_35px_rgba(16,185,129,0.25)] group-hover:border-emerald-500/50">
+                  {/* Paw Print Custom SVG with Glow */}
+                  <PawPrint size={25} className="text-emerald-500/30" />
+                </div>
+
+                <h2 className="text-3xl md:text-4xl font-bold text-emerald-400 tracking-wide mb-3 drop-shadow-[0_0_12px_rgba(52,211,153,0.4)]">
+                  Adopted
+                </h2>
+
+                <p className="text-emerald-400/80 font-medium text-sm md:text-base tracking-normal mb-6">
+                  This pet has already been adopted
+                </p>
+
+                <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent mb-6" />
+
+                <div className="flex items-center gap-3 max-w-[280px] text-left">
+                  <Heart className="w-6 h-6 text-emerald-400/60 shrink-0 stroke-[1.5]" />
+                  <p className="text-xs md:text-sm text-emerald-500/70 font-medium leading-relaxed">
+                    Thank you for helping pets find loving homes.
+                  </p>
+                </div>
+              </div>
             </div>
+          )}
 
-            <form className="space-y-4">
-              <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-slate-400">
-                  Pet Name
-                </label>
-                <div className="relative">
+          {isOwner && (
+            <div className="bg-[#0B0F19] flex items-center justify-center antialiased font-sans">
+              {/* Main Panel Card */}
+              <div className="w-full max-w-2xl bg-[#111827] border border-slate-800/80 rounded-[28px] p-6 md:p-8 shadow-2xl shadow-black/60 relative overflow-hidden">
+                {/* Left Side Glowing Edge Effect */}
+                <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-orange-500/80 via-orange-600/40 to-transparent blur-[1px]" />
+
+                {/* Header Section */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                  <div className="flex items-center gap-3">
+                    <Crown className="w-7 h-7 text-orange-500 fill-orange-500/20 stroke-[2]" />
+                    <h2 className="text-xl md:text-2xl font-bold text-white tracking-tight">
+                      Pet Owner Panel
+                    </h2>
+                  </div>
+                </div>
+
+                {/* Description */}
+                <p className="text-sm md:text-base text-slate-400 font-normal leading-relaxed mb-6 max-w-xl">
+                  You are the owner of this pet. Manage your listing and
+                  requests easily from here.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {!isAdopted && !isOwner && (
+            <div className="bg-[#111827] border border-slate-800 rounded-3xl p-6 space-y-5 shadow-xl shadow-black/40 relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r align-super from-orange-600 to-amber-500"></div>
+
+              <div className="space-y-1">
+                <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                  Adoption Request
+                </h3>
+                <p className="text-xs text-slate-400">
+                  Please fill out the form below to send an adoption request for
+                  Bella.
+                </p>
+              </div>
+
+              <form className="space-y-4">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-slate-400">
+                    Pet Name
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={petName}
+                      disabled
+                      className="w-full bg-[#1E293B]/50 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-400 cursor-not-allowed opacity-80"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-slate-400">
+                    Your Name
+                  </label>
                   <input
                     type="text"
-                    value={petName}
+                    value={user?.name}
                     disabled
                     className="w-full bg-[#1E293B]/50 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-400 cursor-not-allowed opacity-80"
                   />
                 </div>
-              </div>
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-slate-400">
-                  Your Name
-                </label>
-                <input
-                  type="text"
-                  value={user?.name}
-                  disabled
-                  className="w-full bg-[#1E293B]/50 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-400 cursor-not-allowed opacity-80"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-slate-400">
-                  Your Email
-                </label>
-                <input
-                  type="email"
-                  value={user?.email}
-                  disabled
-                  className="w-full bg-[#1E293B]/50 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-400 cursor-not-allowed opacity-80"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-slate-300">
-                  Pickup Date
-                </label>
-                <input
-                  type="date"
-                  min={
-                    pet?.createdAt
-                      ? new Date(pet.createdAt).toISOString().split('T')[0]
-                      : undefined
-                  }
-                  className="w-full bg-[#1E293B] border border-slate-700/80 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-orange-500 transition [color-scheme:dark]"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <div className="flex justify-between text-xs font-semibold">
-                  <label className="text-slate-300">Message</label>
-                  <span className="text-slate-500">/500</span>
-                </div>
-                <textarea
-                  maxLength={500}
-                  placeholder="Tell us why you would be a great home for Bella..."
-                  rows={4}
-                  className="w-full bg-[#1E293B] border border-slate-700/80 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 transition resize-none"
-                />
-              </div>
-
-              {/* Warning Notice */}
-              <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 flex gap-3">
-                <div className="text-amber-500 shrink-0 mt-0.5">
-                  <Info size={16} />
-                </div>
-                <div className="text-xs text-amber-400/90 leading-normal">
-                  <span className="font-bold block text-amber-400">
-                    Important
-                  </span>
-                  You cannot adopt your own pet.
-                </div>
-              </div>
-
-              {/* Action Button */}
-              <button className="w-full py-3 px-4 rounded-xl font-bold bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white transition shadow-lg shadow-orange-500/10 active:scale-[0.99]">
-                Adopt Now
-              </button>
-            </form>
-
-            <p className="text-[11px] text-center text-slate-500 flex items-center justify-center gap-1">
-              <Shield size={12} /> Your information is safe with us.
-            </p>
-          </div>
-
-          {/* Why Adopt section */}
-          <div className="bg-[#111827] border border-slate-800 rounded-3xl p-6 space-y-4">
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider">
-              Why Adopt from PawHaven?
-            </h4>
-            <ul className="space-y-3">
-              {[
-                'Verified shelters & pets',
-                'Health checked & vaccinated',
-                'Safe & transparent process',
-                'Lifetime support',
-              ].map((perk, idx) => (
-                <li
-                  key={idx}
-                  className="flex items-center gap-2.5 text-sm text-slate-300"
-                >
-                  <CheckCircle
-                    size={16}
-                    className="text-emerald-500 shrink-0"
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-slate-400">
+                    Your Email
+                  </label>
+                  <input
+                    type="email"
+                    value={user?.email}
+                    disabled
+                    className="w-full bg-[#1E293B]/50 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-400 cursor-not-allowed opacity-80"
                   />
-                  <span>{perk}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-slate-300">
+                    Pickup Date
+                  </label>
+                  <input
+                    type="date"
+                    min={
+                      pet?.createdAt
+                        ? new Date(pet.createdAt).toISOString().split('T')[0]
+                        : undefined
+                    }
+                    className="w-full bg-[#1E293B] border border-slate-700/80 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-orange-500 transition [color-scheme:dark]"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <div className="flex justify-between text-xs font-semibold">
+                    <label className="text-slate-300">Message</label>
+                    <span className="text-slate-500">/500</span>
+                  </div>
+                  <textarea
+                    maxLength={500}
+                    placeholder="Tell us why you would be a great home for Bella..."
+                    rows={4}
+                    className="w-full bg-[#1E293B] border border-slate-700/80 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 transition resize-none"
+                  />
+                </div>
+
+                {/* Action Button */}
+                <button className="w-full py-3 px-4 rounded-xl font-bold bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white transition shadow-lg shadow-orange-500/10 active:scale-[0.99]">
+                  Adopt Now
+                </button>
+              </form>
+
+              <p className="text-[11px] text-center text-slate-500 flex items-center justify-center gap-1">
+                <Shield size={12} /> Your information is safe with us.
+              </p>
+            </div>
+          )}
         </div>
       </main>
     </div>
