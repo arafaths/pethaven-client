@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Plus,
   Search,
@@ -15,151 +15,185 @@ import {
   Heart,
   Bell,
 } from 'lucide-react';
+import { authClient } from '@/lib/auth-client';
+import Image from 'next/image';
+import Link from 'next/link';
+import EditModal from '@/components/my-listing/EditModal';
+import toast from 'react-hot-toast';
 
 const MyListingsPage = () => {
   // Modal Open/Close এবং Selected Pet Track করার স্টেট
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPet, setSelectedPet] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [selectePet, setSelectePet] = useState(null);
+  const [pets, setPets] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
+
+   useEffect(() => {
+     const fetchPets = async () => {
+       try {
+         if (!user?.email) return;
+
+         setLoading(true);
+
+         const res = await fetch(
+           `http://localhost:5000/my-pets?email=${user.email}`,
+         );
+
+         const data = await res.json();
+
+         setPets(data);
+       } catch (error) {
+         console.log(error);
+       } finally {
+         setLoading(false);
+       }
+     };
+
+     fetchPets();
+   }, [user]);
+  
+  const total = pets.length;
+  const adopted = pets.filter(p => p.isAdopted).length;
+  const available = pets.filter(p => !p.isAdopted).length;
+  
   // Top Statistics Data
   const stats = [
     {
       label: 'Total Pets',
-      count: 12,
+      count: total,
       color: 'text-orange-500',
       icon: PawPrint,
     },
     {
       label: 'Available Pets',
-      count: 8,
+      count: available,
       color: 'text-emerald-500',
       icon: PawPrint,
     },
     {
       label: 'Adopted Pets',
-      count: 3,
+      count: adopted,
       color: 'text-rose-500',
       icon: Heart,
     },
-    {
-      label: 'Total Requests',
-      count: 15,
-      color: 'text-amber-500',
-      icon: Users,
-    },
+
   ];
 
-  // Table Row Listings
-  const petListings = [
-    {
-      id: 1,
-      name: 'Buddy',
-      breed: 'Golden Retriever',
-      species: 'Dog',
-      age: '2 Years',
-      location: 'New York, USA',
-      fee: '$250',
-      status: 'Available',
-      date: 'May 20, 2025',
-      img: 'https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&q=80&w=150',
-    },
-    {
-      id: 2,
-      name: 'Luna',
-      breed: 'British Shorthair',
-      species: 'Cat',
-      age: '1 Year',
-      location: 'Austin, USA',
-      fee: '$180',
-      status: 'Available',
-      date: 'May 18, 2025',
-      img: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=150',
-    },
-    {
-      id: 3,
-      name: 'Cinnamon',
-      breed: 'Holland Lop',
-      species: 'Rabbit',
-      age: '8 Months',
-      location: 'Seattle, USA',
-      fee: '$120',
-      status: 'Available',
-      date: 'May 15, 2025',
-      img: 'https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?auto=format&fit=crop&q=80&w=150',
-    },
-    {
-      id: 4,
-      name: 'Sunny',
-      breed: 'Cockatiel',
-      species: 'Bird',
-      age: '1 Year',
-      location: 'Miami, USA',
-      fee: '$90',
-      status: 'Adopted',
-      date: 'May 10, 2025',
-      img: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=150',
-    },
-    {
-      id: 5,
-      name: 'Max',
-      breed: 'Border Collie',
-      species: 'Dog',
-      age: '3 Years',
-      location: 'Denver, USA',
-      fee: '$200',
-      status: 'Available',
-      date: 'May 08, 2025',
-      img: 'https://images.unsplash.com/photo-1503256207526-0d5d80fa2f47?auto=format&fit=crop&q=80&w=150',
-    },
-  ];
+  // Modal 
+  const [requests, setRequests] = useState([]);
 
-  // Modal এর ভেতরের রিকোয়েস্ট ডেটা
-  const adoptionRequests = [
-    {
-      id: 1,
-      name: 'Emily Johnson',
-      email: 'emily.johnson@email.com',
-      date: 'May 28, 2025',
-      message: 'Hi! I am very interested in Buddy.',
-      status: 'Pending',
-      avatar:
-        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100',
-    },
-    {
-      id: 2,
-      name: 'Michael Brown',
-      email: 'michael.brown@email.com',
-      date: 'May 30, 2025',
-      message: 'I have experience with dogs...',
-      status: 'Approved',
-      avatar:
-        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100',
-    },
-    {
-      id: 3,
-      name: 'Sophia Williams',
-      email: 'sophia.williams@email.com',
-      date: 'Jun 02, 2025',
-      message: 'We have a big backyard...',
-      status: 'Rejected',
-      avatar:
-        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=100',
-    },
-    {
-      id: 4,
-      name: 'Daniel Martinez',
-      email: 'daniel.martinez@email.com',
-      date: 'Jun 05, 2025',
-      message: 'Buddy will be in good hands.',
-      status: 'Rejected',
-      avatar:
-        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=100',
-    },
-  ];
+  useEffect(() => {
+    if (!selectedPet?._id) return;
+
+    fetch(`http://localhost:5000/pet-requests/${selectedPet._id}`)
+      .then(res => res.json())
+      .then(data => setRequests(data));
+  }, [selectedPet]);
+  
+
+  const handleEdit = pet => {
+    setSelectePet(pet);
+    setOpen(true);
+  };
 
   const openRequestsModal = pet => {
     setSelectedPet(pet);
     setIsModalOpen(true);
+  };
+  
+
+  const handleDelete = async id => {
+
+    const res = await fetch(`http://localhost:5000/all-pets/${id}`, {
+      method: 'DELETE',
+    });
+
+    const data = await res.json();
+
+    if (data.deletedCount > 0) {
+      setPets(prev => prev.filter(p => p._id !== id));
+
+      toast.success('Login successful', {
+        style: {
+          border: '1px solid #22C55E',
+        },
+
+        iconTheme: {
+          primary: '#22C55E',
+          secondary: '#fff',
+        },
+      });
+    } else {
+      toast.error('Failed to delete pet');
+    }
+  };
+
+  // Aprov
+  const handleApprove = async requestId => {
+    const res = await fetch(
+      `http://localhost:5000/adoption-request/${requestId}`,
+      {
+        method: 'PATCH',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          status: 'approved',
+          petId: selectedPet._id,
+        }),
+      },
+    );
+
+    const data = await res.json();
+
+    if (data.modifiedCount > 0) {
+      toast.success('Request approved');
+
+      // modal refresh
+      const reqRes = await fetch(
+        `http://localhost:5000/pet-requests/${selectedPet._id}`,
+      );
+
+      const reqData = await reqRes.json();
+
+      setRequests(reqData);
+    }
+  };
+
+  // reject
+  const handleReject = async requestId => {
+    const res = await fetch(
+      `http://localhost:5000/adoption-request/${requestId}`,
+      {
+        method: 'PATCH',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          status: 'rejected',
+          petId: selectedPet._id,
+        }),
+      },
+    );
+
+    const data = await res.json();
+
+    if (data.modifiedCount > 0) {
+      toast.success('Request rejected');
+
+      const reqRes = await fetch(
+        `http://localhost:5000/pet-requests/${selectedPet._id}`,
+      );
+
+      const reqData = await reqRes.json();
+
+      setRequests(reqData);
+    }
   };
 
   return (
@@ -177,14 +211,17 @@ const MyListingsPage = () => {
 
         {/* Actions & Profile Area */}
         <div className="flex items-center gap-4 self-end md:self-auto">
-          <button className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm px-5 py-2.5 rounded-xl transition shadow-lg shadow-orange-500/10">
+          <Link
+            href={'/dashboard/add-pet'}
+            className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm px-5 py-2.5 rounded-xl transition shadow-lg shadow-orange-500/10"
+          >
             <Plus size={16} className="stroke-[2.5]" /> Add New Pet
-          </button>
+          </Link>
         </div>
       </div>
 
       {/* 1. TOP STATS CARDS */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-4 mb-8">
         {stats.map((stat, idx) => (
           <div
             key={idx}
@@ -205,7 +242,6 @@ const MyListingsPage = () => {
                 <stat.icon size={20} />
               </div>
             </div>
-            
           </div>
         ))}
       </div>
@@ -228,21 +264,23 @@ const MyListingsPage = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/50">
-              {petListings.map(pet => (
+              {pets.map(pet => (
                 <tr
-                  key={pet.id}
+                  key={pet._id}
                   className="hover:bg-[#1E293B]/10 transition duration-150 group"
                 >
                   <td className="py-3.5 px-5 whitespace-nowrap">
                     <div className="flex items-center gap-3">
-                      <img
-                        src={pet.img}
-                        alt={pet.name}
+                      <Image
+                        src={pet.imageUrl}
+                        alt={pet.petName}
+                        width={50}
+                        height={50}
                         className="w-10 h-10 rounded-xl object-cover border border-slate-800 bg-slate-900"
                       />
                       <div>
                         <p className="font-bold text-white text-sm tracking-wide">
-                          {pet.name}
+                          {pet.petName}
                         </p>
                         <p className="text-[10px] text-slate-500 mt-0.5">
                           {pet.breed}
@@ -266,13 +304,13 @@ const MyListingsPage = () => {
                     </div>
                   </td>
                   <td className="py-3.5 px-4 text-sm font-bold text-orange-500">
-                    {pet.fee}
+                    {pet.adoptionFee}
                   </td>
                   <td className="py-3.5 px-4 whitespace-nowrap">
                     <span
                       className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold border tracking-wide
                       ${
-                        pet.status === 'Available'
+                        pet.status === 'available'
                           ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
                           : 'bg-rose-500/10 text-rose-400 border-rose-500/20'
                       }`}
@@ -284,32 +322,38 @@ const MyListingsPage = () => {
                     </span>
                   </td>
                   <td className="py-3.5 px-4 text-xs text-slate-500 font-medium">
-                    {pet.date}
+                    {new Date(pet.createdAt).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
                   </td>
 
                   {/* ACTIONS BUTTON CONTROLS */}
                   <td className="py-3.5 px-5 whitespace-nowrap">
                     <div className="flex items-center justify-center gap-1.5">
-                      <button
+                      <Link
+                        href={`/all-pets/${pet._id}`}
                         title="View Details"
                         className="p-2 rounded-lg bg-slate-800/40 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 transition"
                       >
                         <Eye size={14} />
-                      </button>
+                      </Link>
                       <button
+                        onClick={() => handleEdit(pet)}
                         title="Edit Listing"
                         className="p-2 rounded-lg bg-slate-800/40 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 transition"
                       >
                         <Edit2 size={14} />
                       </button>
                       <button
+                        onClick={() => handleDelete(pet._id)}
                         title="Delete Listing"
                         className="p-2 rounded-lg bg-rose-950/10 border border-rose-950/20 text-rose-500 hover:bg-rose-950/30 transition"
                       >
                         <Trash2 size={14} />
                       </button>
 
-                      {/* REQUEST MODAL TRIGGER BUTTON (৪ নম্বর বাটন) */}
                       <button
                         onClick={() => openRequestsModal(pet)}
                         title="View Adoption Requests"
@@ -327,6 +371,15 @@ const MyListingsPage = () => {
         </div>
       </div>
 
+      {/* Edit modal */}
+      {open && (
+        <EditModal
+          selectePet={selectePet}
+          setOpen={setOpen}
+          setPets={setPets}
+        />
+      )}
+
       {/* 4. INTERACTIVE ADOPTION REQUESTS MODAL BACKDROP */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300">
@@ -341,7 +394,7 @@ const MyListingsPage = () => {
                 <p className="text-xs text-slate-400 mt-0.5">
                   Pet:{' '}
                   <span className="text-orange-500 font-bold">
-                    {selectedPet?.name} ({selectedPet?.breed})
+                    {selectePet?.name} ({selectedPet?.breed})
                   </span>
                 </p>
               </div>
@@ -366,17 +419,19 @@ const MyListingsPage = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800/40">
-                  {adoptionRequests.map(req => (
+                  {requests.map(req => (
                     <tr
-                      key={req.id}
+                      key={req._id}
                       className="hover:bg-[#1E293B]/10 transition duration-150"
                     >
                       {/* Requester Profile */}
                       <td className="py-3 px-5 whitespace-nowrap">
                         <div className="flex items-center gap-2.5">
-                          <img
-                            src={req.avatar}
+                          <Image
+                            src={req.img}
                             alt={req.name}
+                            width={40}
+                            height={40}
                             className="w-8 h-8 rounded-full object-cover border border-slate-800"
                           />
                           <div>
@@ -384,7 +439,7 @@ const MyListingsPage = () => {
                               {req.name}
                             </p>
                             <p className="text-[10px] text-slate-500">
-                              {req.email}
+                              {req.requesterEmail}
                             </p>
                           </div>
                         </div>
@@ -392,7 +447,11 @@ const MyListingsPage = () => {
 
                       {/* Pickup Date */}
                       <td className="py-3 px-4 text-xs text-slate-400 font-medium whitespace-nowrap">
-                        {req.date}
+                        {new Date(req.createdAt).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        })}
                       </td>
 
                       {/* Message Content */}
@@ -407,9 +466,9 @@ const MyListingsPage = () => {
                       <td className="py-3 px-4 text-center whitespace-nowrap">
                         <span
                           className={`inline-flex px-2 py-1 rounded-lg text-[10px] font-bold border tracking-wider w-20 justify-center
-                          ${req.status === 'Pending' && 'bg-amber-500/10 text-amber-400 border-amber-500/10'}
-                          ${req.status === 'Approved' && 'bg-emerald-500/10 text-emerald-400 border-emerald-500/10'}
-                          ${req.status === 'Rejected' && 'bg-rose-500/10 text-rose-400 border-rose-500/10'}`}
+                          ${req.status === 'pending' && 'bg-amber-500/10 text-amber-400 border-amber-500/10'}
+                          ${req.status === 'approved' && 'bg-emerald-500/10 text-emerald-400 border-emerald-500/10'}
+                          ${req.status === 'rejected' && 'bg-rose-500/10 text-rose-400 border-rose-500/10'}`}
                         >
                           {req.status}
                         </span>
@@ -419,10 +478,11 @@ const MyListingsPage = () => {
                       <td className="py-3 px-5 whitespace-nowrap text-center">
                         <div className="flex items-center justify-center gap-1.5">
                           <button
-                            disabled={req.status !== 'Pending'}
+                            onClick={() => handleApprove(req._id)}
+                            disabled={req.status !== 'pending'}
                             className={`px-3 py-1 rounded-lg text-[10px] font-bold border transition
                               ${
-                                req.status === 'Pending'
+                                req.status === 'pending'
                                   ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-white'
                                   : 'bg-[#1E293B]/20 border-slate-800/80 text-slate-600 cursor-not-allowed'
                               }`}
@@ -430,10 +490,11 @@ const MyListingsPage = () => {
                             Approve
                           </button>
                           <button
-                            disabled={req.status !== 'Pending'}
+                            onClick={() => handleReject(req._id)}
+                            disabled={req.status !== 'pending'}
                             className={`px-3 py-1 rounded-lg text-[10px] font-bold border transition
                               ${
-                                req.status === 'Pending'
+                                req.status === 'pending'
                                   ? 'bg-rose-500/10 border-rose-500/20 text-rose-400 hover:bg-rose-500 hover:text-white'
                                   : 'bg-[#1E293B]/20 border-slate-800/80 text-slate-600 cursor-not-allowed'
                               }`}

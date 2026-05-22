@@ -105,7 +105,7 @@ export default function Nav() {
 
             {/* User */}
             {user && (
-              <div className="hidden lg:flex items-center gap-3 p-4 border-b border-gray-200 dark:border-gray-800">
+              <div className="hidden lg:flex items-center gap-3 dark:border-gray-800">
                 <Avatar>
                   <Avatar.Image
                     referrerPolicy="no-referrer"
