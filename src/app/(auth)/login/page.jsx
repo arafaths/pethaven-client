@@ -5,6 +5,7 @@ import { FcGoogle } from 'react-icons/fc';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { authClient } from '@/lib/auth-client';
+import toast from 'react-hot-toast';
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,11 +23,28 @@ const LoginPage = () => {
     });
 
     if (data) {
-      alert('Login successful');
+      toast.success('Login successful', {
+        style: {
+          border: '1px solid #22C55E',
+        },
+
+        iconTheme: {
+          primary: '#22C55E',
+          secondary: '#fff',
+        },
+      });
       redirect('/');
     }
     if (error) {
-      alert(error.message);
+      toast(error.message, {
+        icon: '⚠️',
+
+        style: {
+          border: '1px solid #FACC15',
+          background: '#0B0F19',
+          color: '#fff',
+        },
+      });
     }
   };
 

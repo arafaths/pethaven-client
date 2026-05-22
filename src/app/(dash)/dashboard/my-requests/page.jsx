@@ -116,7 +116,7 @@ const MyRequestsPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-[#E2E8F0] font-sans antialiased p-4 md:p-8 lg:p-12 selection:bg-orange-500 selection:text-white">
+    <div className="min-h-screen bg-[#0B0F19] text-[#E2E8F0] font-sans antialiased p-4  selection:bg-orange-500 selection:text-white">
       <div className="max-w-7xl mx-auto space-y-5">
         <div className="space-y-1.5">
           <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
@@ -162,7 +162,7 @@ const MyRequestsPage = () => {
               })}
             </div>
 
-            <div className="bg-[#0B0F19] text-[#E2E8F0] p-4 md:p-8 font-sans antialiased flex items-center justify-center">
+            <div className="bg-[#0B0F19] text-[#E2E8F0] p-4 md:p-8 font-sans antialiased">
               {totalRequests === 0 && <NoRequest />}
               {totalRequests > 0 && (
                 <div className="w-full max-w-6xl bg-[#111827] border border-slate-900 rounded-3xl overflow-hidden shadow-2xl shadow-black/80">

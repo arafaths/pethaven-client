@@ -2,6 +2,7 @@
 import { Alert, CloseButton } from '@heroui/react';
 import { Shield } from 'lucide-react';
 import React from 'react';
+import toast from 'react-hot-toast';
 
 const Form = ({ pet, user }) => {
   const { petName, ownerEmail, imageUrl, species, location, adoptionFee } = pet;
@@ -36,20 +37,31 @@ const Form = ({ pet, user }) => {
 
       const data = await res.json();
 
-      console.log(data);
+
 
       if (data.success) {
-        <Alert status="success">
-          <Alert.Indicator />
-          <Alert.Content>
-            <Alert.Title>{ data.success}</Alert.Title>
-          </Alert.Content>
-          <CloseButton />
-        </Alert>;
+        toast.success('Adoption request sent successfully', {
+          style: {
+            border: '1px solid #22C55E',
+          },
+
+          iconTheme: {
+            primary: '#22C55E',
+            secondary: '#fff',
+          },
+        });
         form.reset();
       }
       else {
-        alert(data.message);
+        toast('Pet already adopted', {
+          icon: '⚠️',
+
+          style: {
+            border: '1px solid #FACC15',
+            background: '#0B0F19',
+            color: '#fff',
+          },
+        });
       }
     
   };
@@ -112,6 +124,7 @@ const Form = ({ pet, user }) => {
           <input
             type="date"
             name="date"
+            required
             min={
               pet?.createdAt
                 ? new Date(pet.createdAt).toISOString().split('T')[0]
@@ -129,6 +142,7 @@ const Form = ({ pet, user }) => {
           <textarea
             maxLength={500}
             name="message"
+            required
             placeholder="Tell us why you would be a great home for Bella..."
             rows={4}
             className="w-full bg-[#1E293B] border border-slate-700/80 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 transition resize-none"

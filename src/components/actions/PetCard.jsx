@@ -47,7 +47,6 @@ const PetCard = ({ pet }) => {
 
       {/* Content */}
       <div className="p-5 flex flex-col flex-grow">
-        {/* Name + Species */}
         <div className="flex justify-between items-center mb-2">
           <h3 className="text-2xl font-bold text-white">{pet.petName}</h3>
 
@@ -68,12 +67,10 @@ const PetCard = ({ pet }) => {
           </span>
         </div>
 
-        {/* Description */}
         <p className="text-gray-400 text-sm mb-4 line-clamp-2 leading-relaxed">
           {pet.description}
         </p>
 
-        {/* Meta */}
         <div className="flex justify-between text-sm text-gray-400 mb-5">
           <div className="flex items-center gap-1">
             <Calendar className="w-4 h-4 text-orange-400" />
@@ -90,7 +87,6 @@ const PetCard = ({ pet }) => {
           </div>
         </div>
 
-        {/* Buttons */}
         <div className="grid grid-cols-2 gap-3 mt-auto">
           <Link
             href={`/all-pets/${pet._id}`}

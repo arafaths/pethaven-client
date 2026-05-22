@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 const Footer = () => {
@@ -10,12 +11,18 @@ const Footer = () => {
           <div className="lg:col-span-4 space-y-5">
             <Link
               href="/"
-              className="flex items-center gap-2 text-2xl font-bold"
+              className="flex items-center gap-1 text-2xl font-bold text-black dark:text-white"
             >
-              <span className="text-primary text-3xl">🐾</span>
+              <Image
+                src={'/PetHaven.png'}
+                alt="PetHaven"
+                width={30}
+                height={30}
+                className="w-10 h-10"
+              />
 
               <span>
-                Pen<span className="text-primary">Haven</span>
+                Pet<span className="text-orange-500">Haven</span>
               </span>
             </Link>
 

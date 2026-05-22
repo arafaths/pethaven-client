@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { FcGoogle } from 'react-icons/fc';
 import { authClient } from '@/lib/auth-client';
 import { redirect } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 const SignupPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -58,11 +59,28 @@ const SignupPage = () => {
     });
 
      if (data) {
-       alert('SignUp successful');
+       toast.success('Signup successful', {
+         style: {
+           border: '1px solid #22C55E',
+         },
+
+         iconTheme: {
+           primary: '#22C55E',
+           secondary: '#fff',
+         },
+       });
        redirect('/');
      }
      if (error) {
-       alert(error.message);
+       toast(error.message, {
+         icon: '⚠️',
+
+         style: {
+           border: '1px solid #FACC15',
+           background: '#0B0F19',
+           color: '#fff',
+         },
+       });
      }
   };
 

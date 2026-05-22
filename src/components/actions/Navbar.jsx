@@ -8,6 +8,7 @@ import { usePathname } from 'next/navigation';
 import { useTheme } from '@/providers/ThemeProvider';
 import { authClient } from '@/lib/auth-client';
 import { Avatar } from '@heroui/react';
+import Image from 'next/image';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -48,14 +49,14 @@ export default function Navbar() {
     await authClient.signOut();
   }
   return (
-    <nav className="sticky top-0 z-50 bg-white dark:bg-[#0B0F19] border-b border-gray-200 dark:border-gray-800 text-black dark:text-white px-6 py-4 backdrop-blur-xl transition-all duration-300">
+    <nav className="sticky top-0 z-60 bg-white dark:bg-[#0B0F19] border-b border-gray-200 dark:border-gray-800 text-black dark:text-white px-6 py-4 backdrop-blur-xl transition-all duration-300">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center gap-2 text-2xl font-bold text-black dark:text-white"
+          className="flex items-center gap-1 text-2xl font-bold text-black dark:text-white"
         >
-          <span className="text-orange-500 text-3xl">🐾</span>
+          <Image src={'/PetHaven.png'} alt='PetHaven' width={30} height={30} className='w-10 h-10'/>
 
           <span>
             Pet<span className="text-orange-500">Haven</span>
@@ -141,7 +142,7 @@ export default function Navbar() {
                   </div>
 
                   <Link
-                    href="/dashboard"
+                    href="/dashboard/my-requests"
                     className="block px-4 py-2.5 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-black dark:hover:text-white transition-all duration-300"
                   >
                     Dashboard
