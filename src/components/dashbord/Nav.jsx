@@ -42,7 +42,7 @@ export default function Nav() {
       href: '/dashboard/my-listings',
       icon: NotebookTabs,
     },
-    
+
     {
       name: 'Add Pet',
       href: '/dashboard/add-pet',
@@ -124,6 +124,15 @@ export default function Nav() {
                   </p>
                 </div>
               </div>
+            )}
+
+            {/* Login */}
+            {!user && (
+              <Link href="/login">
+                <button className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 shadow-lg shadow-orange-500/20">
+                  Login
+                </button>
+              </Link>
             )}
           </div>
         </div>

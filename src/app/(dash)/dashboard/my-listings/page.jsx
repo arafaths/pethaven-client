@@ -21,13 +21,13 @@ import Link from 'next/link';
 import EditModal from '@/components/my-listing/EditModal';
 import toast from 'react-hot-toast';
 import AdoptionRequestsModal from '@/components/my-listing/AdoptionRequestsModal';
+import NoPetList from '@/components/my-listing/NoPetList';
+import Loading from '@/components/actions/Loading';
 
 const MyListingsPage = () => {
-  // Modal Open/Close এবং Selected Pet Track করার স্টেট
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPet, setSelectedPet] = useState(null);
   const [open, setOpen] = useState(false);
-  const [selectePet, setSelectePet] = useState(null);
   const [pets, setPets] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -151,7 +151,7 @@ const MyListingsPage = () => {
 
     const data = await res.json();
 
-    if (data.modifiedCount > 0) {
+    if (data.success) {
       toast.success('Request approved');
 
       // modal refresh
@@ -183,7 +183,7 @@ const MyListingsPage = () => {
 
     const data = await res.json();
 
-    if (data.modifiedCount > 0) {
+    if (data.success) {
       toast.success('Request rejected');
 
       const reqRes = await fetch(
@@ -220,156 +220,169 @@ const MyListingsPage = () => {
         </div>
       </div>
 
-      {/* 1. TOP STATS CARDS */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-4 mb-8">
-        {stats.map((stat, idx) => (
-          <div
-            key={idx}
-            className="bg-[#111827] border border-slate-800/80 rounded-2xl p-5 shadow-xl relative overflow-hidden group"
-          >
-            <div className="flex items-center justify-between">
-              <div className="space-y-1">
-                <span className="text-2xl font-bold text-white">
-                  {stat.count}
-                </span>
-                <p className="text-xs text-slate-400 font-medium">
-                  {stat.label}
-                </p>
-              </div>
-              <div
-                className={`p-3 rounded-xl bg-[#1E293B]/60 border border-slate-800 ${stat.color}`}
-              >
-                <stat.icon size={20} />
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      {/* loading */}
+      {loading && <Loading />}
 
-      {/* 3. LISTINGS TABLE */}
-      <div className="max-w-7xl mx-auto bg-[#111827] border border-slate-900 rounded-3xl overflow-hidden shadow-2xl">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="border-b border-slate-800/80 text-slate-400 text-xs font-semibold uppercase tracking-wider bg-[#111827]">
-                <th className="py-4 px-5">Pet</th>
-                <th className="py-4 px-4">Species</th>
-                <th className="py-4 px-4">Breed</th>
-                <th className="py-4 px-4">Age</th>
-                <th className="py-4 px-4">Location</th>
-                <th className="py-4 px-4">Adoption Fee</th>
-                <th className="py-4 px-4">Status</th>
-                <th className="py-4 px-4">Created At</th>
-                <th className="py-4 px-5 text-center">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-800/50">
-              {pets.map(pet => (
-                <tr
-                  key={pet._id}
-                  className="hover:bg-[#1E293B]/10 transition duration-150 group"
-                >
-                  <td className="py-3.5 px-5 whitespace-nowrap">
-                    <div className="flex items-center gap-3">
-                      <Image
-                        src={pet.imageUrl}
-                        alt={pet.petName}
-                        width={50}
-                        height={50}
-                        className="w-10 h-10 rounded-xl object-cover border border-slate-800 bg-slate-900"
-                      />
-                      <div>
-                        <p className="font-bold text-white text-sm tracking-wide">
-                          {pet.petName}
-                        </p>
-                        <p className="text-[10px] text-slate-500 mt-0.5">
+      {/* mine content */}
+      {!loading && (
+        <>
+          {/*Top card */}
+          <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-4 mb-8">
+            {stats.map((stat, idx) => (
+              <div
+                key={idx}
+                className="bg-[#111827] border border-slate-800/80 rounded-2xl p-5 shadow-xl relative overflow-hidden group"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="space-y-1">
+                    <span className="text-2xl font-bold text-white">
+                      {stat.count}
+                    </span>
+                    <p className="text-xs text-slate-400 font-medium">
+                      {stat.label}
+                    </p>
+                  </div>
+                  <div
+                    className={`p-3 rounded-xl bg-[#1E293B]/60 border border-slate-800 ${stat.color}`}
+                  >
+                    <stat.icon size={20} />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* No pet */}
+          {total === 0 && <NoPetList />}
+
+          {/*table */}
+          {total > 0 && (
+            <div className="max-w-7xl mx-auto bg-[#111827] border border-slate-900 rounded-3xl overflow-hidden shadow-2xl">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="border-b border-slate-800/80 text-slate-400 text-xs font-semibold uppercase tracking-wider bg-[#111827]">
+                      <th className="py-4 px-5">Pet</th>
+                      <th className="py-4 px-4">Species</th>
+                      <th className="py-4 px-4">Breed</th>
+                      <th className="py-4 px-4">Age</th>
+                      <th className="py-4 px-4">Location</th>
+                      <th className="py-4 px-4">Adoption Fee</th>
+                      <th className="py-4 px-4">Status</th>
+                      <th className="py-4 px-4">Created At</th>
+                      <th className="py-4 px-5 text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-800/50">
+                    {pets.map(pet => (
+                      <tr
+                        key={pet._id}
+                        className="hover:bg-[#1E293B]/10 transition duration-150 group"
+                      >
+                        <td className="py-3.5 px-5 whitespace-nowrap">
+                          <div className="flex items-center gap-3">
+                            <Image
+                              src={pet.imageUrl}
+                              alt={pet.petName}
+                              width={50}
+                              height={50}
+                              className="w-10 h-10 rounded-xl object-cover border border-slate-800 bg-slate-900"
+                            />
+                            <div>
+                              <p className="font-bold text-white text-sm tracking-wide">
+                                {pet.petName}
+                              </p>
+                              <p className="text-[10px] text-slate-500 mt-0.5">
+                                {pet.breed}
+                              </p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="py-3.5 px-4 text-xs font-medium text-slate-300">
+                          {pet.species}
+                        </td>
+                        <td className="py-3.5 px-4 text-xs font-medium text-slate-400">
                           {pet.breed}
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="py-3.5 px-4 text-xs font-medium text-slate-300">
-                    {pet.species}
-                  </td>
-                  <td className="py-3.5 px-4 text-xs font-medium text-slate-400">
-                    {pet.breed}
-                  </td>
-                  <td className="py-3.5 px-4 text-xs font-medium text-slate-400">
-                    {pet.age}
-                  </td>
-                  <td className="py-3.5 px-4 text-xs text-slate-300">
-                    <div className="flex items-center gap-1">
-                      <MapPin size={12} className="text-slate-500" />{' '}
-                      {pet.location}
-                    </div>
-                  </td>
-                  <td className="py-3.5 px-4 text-sm font-bold text-orange-500">
-                    {pet.adoptionFee}
-                  </td>
-                  <td className="py-3.5 px-4 whitespace-nowrap">
-                    <span
-                      className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold border tracking-wide
+                        </td>
+                        <td className="py-3.5 px-4 text-xs font-medium text-slate-400">
+                          {pet.age}
+                        </td>
+                        <td className="py-3.5 px-4 text-xs text-slate-300">
+                          <div className="flex items-center gap-1">
+                            <MapPin size={12} className="text-slate-500" />{' '}
+                            {pet.location}
+                          </div>
+                        </td>
+                        <td className="py-3.5 px-4 text-sm font-bold text-orange-500">
+                          {pet.adoptionFee}
+                        </td>
+                        <td className="py-3.5 px-4 whitespace-nowrap">
+                          <span
+                            className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold border tracking-wide
                       ${
                         pet.status === 'available'
                           ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
                           : 'bg-rose-500/10 text-rose-400 border-rose-500/20'
                       }`}
-                    >
-                      <span
-                        className={`w-1 h-1 rounded-full ${pet.status === 'Available' ? 'bg-emerald-500' : 'bg-rose-500'}`}
-                      />
-                      {pet.status}
-                    </span>
-                  </td>
-                  <td className="py-3.5 px-4 text-xs text-slate-500 font-medium">
-                    {new Date(pet.createdAt).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
-                  </td>
+                          >
+                            <span
+                              className={`w-1 h-1 rounded-full ${pet.status === 'Available' ? 'bg-emerald-500' : 'bg-rose-500'}`}
+                            />
+                            {pet.status}
+                          </span>
+                        </td>
+                        <td className="py-3.5 px-4 text-xs text-slate-500 font-medium">
+                          {new Date(pet.createdAt).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                          })}
+                        </td>
 
-                  {/* ACTIONS BUTTON CONTROLS */}
-                  <td className="py-3.5 px-5 whitespace-nowrap">
-                    <div className="flex items-center justify-center gap-1.5">
-                      <Link
-                        href={`/all-pets/${pet._id}`}
-                        title="View Details"
-                        className="p-2 rounded-lg bg-slate-800/40 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 transition"
-                      >
-                        <Eye size={14} />
-                      </Link>
-                      <button
-                        onClick={() => handleEdit(pet)}
-                        title="Edit Listing"
-                        className="p-2 rounded-lg bg-slate-800/40 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 transition"
-                      >
-                        <Edit2 size={14} />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(pet._id)}
-                        title="Delete Listing"
-                        className="p-2 rounded-lg bg-rose-950/10 border border-rose-950/20 text-rose-500 hover:bg-rose-950/30 transition"
-                      >
-                        <Trash2 size={14} />
-                      </button>
+                        {/* ACTIONS BUTTON CONTROLS */}
+                        <td className="py-3.5 px-5 whitespace-nowrap">
+                          <div className="flex items-center justify-center gap-1.5">
+                            <Link
+                              href={`/all-pets/${pet._id}`}
+                              title="View Details"
+                              className="p-2 rounded-lg bg-slate-800/40 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 transition"
+                            >
+                              <Eye size={14} />
+                            </Link>
+                            <button
+                              onClick={() => handleEdit(pet)}
+                              title="Edit Listing"
+                              className="p-2 rounded-lg bg-slate-800/40 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 transition"
+                            >
+                              <Edit2 size={14} />
+                            </button>
+                            <button
+                              onClick={() => handleDelete(pet._id)}
+                              title="Delete Listing"
+                              className="p-2 rounded-lg bg-rose-950/10 border border-rose-950/20 text-rose-500 hover:bg-rose-950/30 transition"
+                            >
+                              <Trash2 size={14} />
+                            </button>
 
-                      <button
-                        onClick={() => openRequestsModal(pet)}
-                        title="View Adoption Requests"
-                        className="p-2 rounded-lg bg-orange-500/10 border border-orange-500/20 text-orange-400 hover:bg-orange-500 hover:text-white transition relative shadow-sm"
-                      >
-                        <Users size={14} />
-                        <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-orange-500 shadow-md shadow-orange-500/50" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+                            <button
+                              onClick={() => openRequestsModal(pet)}
+                              title="View Adoption Requests"
+                              className="p-2 rounded-lg bg-orange-500/10 border border-orange-500/20 text-orange-400 hover:bg-orange-500 hover:text-white transition relative shadow-sm"
+                            >
+                              <Users size={14} />
+                              <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-orange-500 shadow-md shadow-orange-500/50" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+        </>
+      )}
 
       {/* Edit modal */}
       {open && (
@@ -386,6 +399,8 @@ const MyListingsPage = () => {
           selectePet={selectedPet}
           requests={requests}
           setIsModalOpen={setIsModalOpen}
+          handleApprove={handleApprove}
+          handleReject={handleReject}
         />
       )}
     </div>

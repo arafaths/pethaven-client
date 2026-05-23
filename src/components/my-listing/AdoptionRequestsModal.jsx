@@ -2,7 +2,13 @@ import { X } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
 
-const AdoptionRequestsModal = ({ selectePet, requests, setIsModalOpen }) => {
+const AdoptionRequestsModal = ({
+  selectePet,
+  requests,
+  setIsModalOpen,
+  handleApprove,
+  handleReject,
+}) => {
   return (
     <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300">
       {/* Modal Container Box */}

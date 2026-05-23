@@ -34,7 +34,7 @@ const PetCareTips = () => {
   ];
 
   return (
-    <section className="bg-[#121212] text-white py-16 px-6 md:px-12 lg:px-24">
+    <section className="bg-[#121212] text-white py-8 sm:py-16 px-3 sm:px-6 md:px-12 lg:px-24">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="flex justify-between items-center mb-10">
@@ -44,13 +44,7 @@ const PetCareTips = () => {
               Pet Care Tips
             </h2>
           </div>
-          <button className="text-sm font-medium border border-[#262B3C] rounded-full px-4 py-1.5 hover:bg-[#12141C] text-gray-300 transition-colors flex items-center gap-1 group">
-            View All Articles
-            <ArrowRight
-              size={14}
-              className="group-hover:translate-x-1 transition-transform"
-            />
-          </button>
+          
         </div>
 
         {/* Cards Grid (First Image Layout) */}

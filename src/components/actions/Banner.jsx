@@ -82,7 +82,7 @@ export default function Hero() {
             transition={{ delay: 0.45 }}
             className="text-gray-400 text-sm sm:text-base max-w-md mx-auto lg:mx-0 leading-relaxed"
           >
-            PawHaven connects loving hearts with pets who deserve a second
+            PatHaven connects loving hearts with pets who deserve a second
             chance. Find your new best friend today.
           </motion.p>
 
@@ -96,7 +96,7 @@ export default function Hero() {
             {/* Adopt Button */}
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link
-                href="/adopt"
+                href="/all-pets"
                 className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold px-7 py-3.5 rounded-full text-sm shadow-lg shadow-orange-500/20 transition-all duration-300"
               >
                 <span>Adopt Now</span>
@@ -212,7 +212,7 @@ export default function Hero() {
               ease: 'easeInOut',
             }}
             whileHover={{ scale: 1.03 }}
-            className="absolute right-2 sm:right-6 top-1/4 z-20 bg-black/40 backdrop-blur-md border border-white/10 p-4 rounded-2xl w-44 shadow-2xl"
+            className="hidden sm:block absolute right-2 sm:right-6 top-1/4 z-20 bg-black/40 backdrop-blur-md border border-white/10 p-4 rounded-2xl w-44 shadow-2xl"
           >
             <span className="text-[10px] uppercase tracking-wider text-gray-400 block font-medium">
               Saved Lives

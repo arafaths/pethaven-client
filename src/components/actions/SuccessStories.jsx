@@ -29,7 +29,7 @@ const SuccessStories = () => {
   ];
 
   return (
-    <section className="bg-[#121212] text-white py-16 px-6 md:px-12 lg:px-24">
+    <section className="bg-[#121212] text-white py-8 sm:py-16 px-3 sm:px-6 md:px-12 lg:px-24">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="flex justify-between items-center mb-10">
@@ -39,9 +39,7 @@ const SuccessStories = () => {
               Success Stories
             </h2>
           </div>
-          <button className="text-sm font-medium border border-[#262B3C] rounded-full px-4 py-1.5 hover:bg-[#12141C] transition-colors text-gray-300">
-            View All Stories
-          </button>
+         
         </div>
 
         {/* Carousel / Slider Container */}
@@ -88,14 +86,7 @@ const SuccessStories = () => {
           </button>
         </div>
 
-        {/* Pagination Dots */}
-        <div className="flex justify-center gap-2 mt-8">
-          <span className="w-2.5 h-2.5 bg-[#FF7A00] rounded-full cursor-pointer"></span>
-          <span className="w-2.5 h-2.5 bg-gray-700 rounded-full cursor-pointer hover:bg-gray-500 transition-colors"></span>
-          <span className="w-2.5 h-2.5 bg-gray-700 rounded-full cursor-pointer hover:bg-gray-500 transition-colors"></span>
-          <span className="w-2.5 h-2.5 bg-gray-700 rounded-full cursor-pointer hover:bg-gray-500 transition-colors"></span>
-          <span className="w-2.5 h-2.5 bg-gray-700 rounded-full cursor-pointer hover:bg-gray-500 transition-colors"></span>
-        </div>
+        
       </div>
     </section>
   );

@@ -4,24 +4,19 @@ import {
   ArrowLeft,
   Heart,
   Shield,
-  CheckCircle,
   Calendar,
   Info,
   User,
-  Mail,
-  MessageSquare,
   MapPin,
   Activity,
   ShieldCheck,
   DollarSign,
   PawPrint,
   Crown,
-  Edit3,
-  Trash2,
-  Users,
 } from 'lucide-react';
 import { headers } from 'next/headers';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const PetDetails = async ({ params }) => {
   const { id } = await params;
@@ -42,10 +37,11 @@ const PetDetails = async ({ params }) => {
     adoptionFee,
     ownerEmail,
     createdAt,
-    isAdopted,
+    status,
   } = pet;
   
-
+  const isAdopted = status === 'adopted';
+  
   const formattedDate = new Date(createdAt).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
@@ -60,11 +56,14 @@ const PetDetails = async ({ params }) => {
   const isOwner = user?.email === ownerEmail;
   return (
     <div className="min-h-screen bg-[#0B0F19] text-[#E2E8F0] font-sans antialiased selection:bg-orange-500 selection:text-white">
-      <div className="max-w-7xl mx-auto px-4 py-3">
-        <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1E293B] border border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800 transition">
+      <div className="flex max-w-7xl mx-auto px-4 py-3">
+        <Link
+          href={'/all-pets'}
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1E293B] border border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800 transition"
+        >
           <ArrowLeft size={18} />
           <span>Back</span>
-        </button>
+        </Link>
       </div>
 
       {/* Main Grid Layout */}
@@ -79,11 +78,14 @@ const PetDetails = async ({ params }) => {
               alt="Bella"
               className="w-full h-full object-cover"
             />
-            <div className="absolute top-4 left-4 flex items-center gap-2 bg-[#0B0F19]/80 backdrop-blur-md px-4 py-2 rounded-full border border-green-500/30">
-              <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span>
-              <span className="text-sm font-medium text-green-400">
-                Available for Adoption
-              </span>
+            <div
+              className={`absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-md ${
+                isAdopted
+                  ? 'bg-red-500/90 text-white'
+                  : 'bg-green-500/90 text-white'
+              }`}
+            >
+              {isAdopted ? 'Adopted' : 'Available'}
             </div>
           </div>
 
@@ -228,9 +230,7 @@ const PetDetails = async ({ params }) => {
             </div>
           )}
 
-          {!isAdopted && !isOwner && (
-            <Form pet={pet} user={user} />
-          )}
+          {!isAdopted && !isOwner && <Form pet={pet} user={user} />}
         </div>
       </main>
     </div>

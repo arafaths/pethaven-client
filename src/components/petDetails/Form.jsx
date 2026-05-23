@@ -137,7 +137,7 @@ const Form = ({ pet, user }) => {
         <div className="space-y-1.5">
           <div className="flex justify-between text-xs font-semibold">
             <label className="text-slate-300">Message</label>
-            <span className="text-slate-500">/500</span>
+            
           </div>
           <textarea
             maxLength={500}

@@ -12,7 +12,7 @@ const FeaturedPets = async () => {
   const pets = await res.json();
 
   return (
-    <section className="min-h-screen bg-[#121212] text-white py-16 px-6 md:px-12 lg:px-24 relative overflow-hidden">
+    <section className="min-h-screen bg-[#121212] text-white py-8 sm:py-16 px-2 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden">
       {/* Background Glow */}
       <div className="absolute top-20 left-1/4 w-72 h-72 bg-orange-500/10 blur-[120px] rounded-full" />
       <div className="absolute bottom-20 right-1/4 w-72 h-72 bg-amber-500/10 blur-[120px] rounded-full" />

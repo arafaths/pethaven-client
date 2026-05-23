@@ -29,7 +29,7 @@ const WhyAdopt = () => {
   ];
 
   return (
-    <section className="bg-[#121212] text-white py-16 px-6 md:px-12 lg:px-24">
+    <section className="bg-[#121212] text-white py-8 sm:py-16 px-3 sm:px-6 md:px-12 lg:px-24">
       <div className="max-w-7xl mx-auto space-y-10">
         <div className="flex items-center gap-2">
           <span className="text-orange-500 text-xl">🐾</span>

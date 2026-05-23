@@ -39,9 +39,6 @@ export default function Navbar() {
 
   const {
     data: session,
-    isPending, //loading state
-    error, //error object
-    refetch, //refetch the session
   } = authClient.useSession();
   const user = session?.user;
   
@@ -49,14 +46,20 @@ export default function Navbar() {
     await authClient.signOut();
   }
   return (
-    <nav className="sticky top-0 z-60 bg-white dark:bg-[#0B0F19] border-b border-gray-200 dark:border-gray-800 text-black dark:text-white px-6 py-4 backdrop-blur-xl transition-all duration-300">
+    <nav className="sticky top-0 z-60 bg-white dark:bg-[#0B0F19] border-b border-gray-200 dark:border-gray-800 text-black dark:text-white px-2 sm:px-6 py-2 sm:py-4 backdrop-blur-xl transition-all duration-300">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center gap-1 text-2xl font-bold text-black dark:text-white"
+          className="flex items-center gap-1 text-xl sm:text-2xl font-bold text-black dark:text-white"
         >
-          <Image src={'/PetHaven.png'} alt='PetHaven' width={30} height={30} className='w-10 h-10'/>
+          <Image
+            src={'/PetHaven.png'}
+            alt="PetHaven"
+            width={30}
+            height={30}
+            className="w-7 sm:w-10 h-7 sm:h-10"
+          />
 
           <span>
             Pet<span className="text-orange-500">Haven</span>
@@ -81,7 +84,7 @@ export default function Navbar() {
         </div>
 
         {/* Right Side */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
@@ -223,13 +226,23 @@ export default function Navbar() {
             </Link>
           ))}
 
-          <div className="pt-3 border-t border-gray-200 dark:border-gray-800">
-            <Link href="/login">
-              <button className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2.5 rounded-full text-sm font-medium transition-all duration-300">
-                Login
-              </button>
-            </Link>
-          </div>
+          {user ? (
+            <div className="pt-3 border-t border-gray-200 dark:border-gray-800">
+              <Link href="/dashboard/my-requests">
+                <button className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2.5 rounded-full text-sm font-medium transition-all duration-300">
+                  Dashboard
+                </button>
+              </Link>
+            </div>
+          ) : (
+            <div className="pt-3 border-t border-gray-200 dark:border-gray-800">
+              <Link href="/login">
+                <button className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2.5 rounded-full text-sm font-medium transition-all duration-300">
+                  Login
+                </button>
+              </Link>
+            </div>
+          )}
         </div>
       )}
     </nav>

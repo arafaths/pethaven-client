@@ -40,9 +40,9 @@ const PetCard = ({ pet }) => {
         </div>
 
         {/* Wishlist Button */}
-        <button className="absolute top-4 right-4 p-2 rounded-full bg-white/70 backdrop-blur-md hover:bg-white hover:scale-110 transition-all duration-300 ease-out">
+        {/* <button className="absolute top-4 right-4 p-2 rounded-full bg-white/70 backdrop-blur-md hover:bg-white hover:scale-110 transition-all duration-300 ease-out">
           <Heart className="w-5 h-5 text-gray-500 hover:text-orange-500 hover:fill-orange-500 transition-all duration-300" />
-        </button>
+        </button> */}
       </div>
 
       {/* Content */}
@@ -71,13 +71,13 @@ const PetCard = ({ pet }) => {
           {pet.description}
         </p>
 
-        <div className="flex justify-between text-sm text-gray-400 mb-5">
+        <div className="flex justify-between text-sm text-gray-400 mb-3 sm:mb-5">
           <div className="flex items-center gap-1">
             <Calendar className="w-4 h-4 text-orange-400" />
             {pet.age}
           </div>
 
-          <div className="flex items-center gap-1">
+          <div className="hidden sm:flex items-center gap-1">
             <MapPin className="w-4 h-4 text-orange-400" />
             {pet.location}
           </div>
@@ -87,7 +87,12 @@ const PetCard = ({ pet }) => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 mt-auto">
+        <div className="flex sm:hidden mb-5 items-center gap-1">
+          <MapPin className="w-4 h-4 text-orange-400" />
+          {pet.location}
+        </div>
+
+        <div className="grid sm:grid-cols-2 gap-3 mt-auto">
           <Link
             href={`/all-pets/${pet._id}`}
             className="py-2 px-4 rounded-xl border border-gray-700 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-300 text-center"

@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 
 import React from 'react';
+import toast from 'react-hot-toast';
 
 const AddPetPage = () => {
   // User data
@@ -40,7 +41,19 @@ const AddPetPage = () => {
       body: JSON.stringify(petData),
     });
     const data = await res.json();
-    console.log(data);
+    if (data.acknowledged) {
+      toast.success('Added pet successfully', {
+        style: {
+          border: '1px solid #22C55E',
+        },
+
+        iconTheme: {
+          primary: '#22C55E',
+          secondary: '#fff',
+        },
+      });
+      e.target.reset();
+    }
   };
   return (
     <div className="min-h-screen bg-[#0B0F19] text-[#E2E8F0] p-4 md:p-8 flex items-center justify-center font-sans antialiased">
