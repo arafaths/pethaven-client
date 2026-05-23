@@ -56,17 +56,17 @@ const AddPetPage = () => {
     }
   };
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-[#E2E8F0] p-4 md:p-8 flex items-center justify-center font-sans antialiased">
+    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0B0F19] text-slate-700 dark:text-[#E2E8F0] p-4 md:p-8 flex items-center justify-center font-sans antialiased transition-colors duration-300">
       <div className="w-full max-w-4xl space-y-6">
         <div className="flex items-center gap-4">
           <div className="p-3.5 bg-orange-500/10 border border-orange-500/20 rounded-2xl text-orange-500 shadow-lg shadow-orange-500/5">
             <Plus size={28} className="stroke-[2.5]" />
           </div>
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+            <h1 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
               Add a New Pet
             </h1>
-            <p className="text-xs md:text-sm text-slate-400">
+            <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400">
               Help a loving pet find a forever home.
             </p>
           </div>
@@ -74,39 +74,39 @@ const AddPetPage = () => {
 
         <form
           onSubmit={onSubmit}
-          className="bg-[#111827] border border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl shadow-black/50 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5 relative overflow-hidden"
+          className="bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl shadow-black/5 dark:shadow-black/50 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5 relative overflow-hidden transition-colors duration-300"
         >
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-600 to-amber-500"></div>
 
           <div className="space-y-5">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-300">
+              <label className="text-xs font-semibold text-slate-600 dark:text-slate-300">
                 Pet Name <span className="text-orange-500">*</span>
               </label>
               <input
                 type="text"
                 name="petName"
                 required
-                className="w-full bg-[#1E293B]/60 border border-slate-700/80 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-orange-500 transition"
+                className="w-full bg-white dark:bg-[#1E293B]/60 border border-slate-200 dark:border-slate-700/80 rounded-xl px-4 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500 transition transition-colors duration-300"
                 placeholder="Enter pet's name"
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-300">
+              <label className="text-xs font-semibold text-slate-600 dark:text-slate-300">
                 Species <span className="text-orange-500">*</span>
               </label>
               <div className="relative">
                 <select
                   name="species"
                   required
-                  className="w-full bg-[#1E293B]/60 border border-slate-700/80 rounded-xl pl-11 pr-10 py-2.5 text-sm text-white appearance-none focus:outline-none focus:border-orange-500 transition"
+                  className="w-full bg-white dark:bg-[#1E293B]/60 border border-slate-200 dark:border-slate-700/80 rounded-xl pl-11 pr-10 py-2.5 text-sm text-slate-900 dark:text-white appearance-none focus:outline-none focus:border-orange-500 transition transition-colors duration-300"
                 >
-                  <option value="Dog">Dog</option>
-                  <option value="Cat">Cat</option>
-                  <option value="Cat">Bird</option>
-                  <option value="Cat">Rabbit</option>
-                  <option value="Other">Other</option>
+                  <option value="Dog" className="text-slate-900 dark:text-white bg-white dark:bg-[#111827]">Dog</option>
+                  <option value="Cat" className="text-slate-900 dark:text-white bg-white dark:bg-[#111827]">Cat</option>
+                  <option value="Bird" className="text-slate-900 dark:text-white bg-white dark:bg-[#111827]">Bird</option>
+                  <option value="Rabbit" className="text-slate-900 dark:text-white bg-white dark:bg-[#111827]">Rabbit</option>
+                  <option value="Other" className="text-slate-900 dark:text-white bg-white dark:bg-[#111827]">Other</option>
                 </select>
                 <Dog
                   size={16}
@@ -120,43 +120,43 @@ const AddPetPage = () => {
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-300">
+              <label className="text-xs font-semibold text-slate-600 dark:text-slate-300">
                 Breed <span className="text-orange-500">*</span>
               </label>
               <input
                 type="text"
                 name="breed"
                 required
-                className="w-full bg-[#1E293B]/60 border border-slate-700/80 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-orange-500 transition"
+                className="w-full bg-white dark:bg-[#1E293B]/60 border border-slate-200 dark:border-slate-700/80 rounded-xl px-4 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500 transition transition-colors duration-300"
                 placeholder="e.g. Golden Retriever"
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-300">
+              <label className="text-xs font-semibold text-slate-600 dark:text-slate-300">
                 Age <span className="text-orange-500">*</span>
               </label>
               <input
                 type="text"
                 name="age"
                 required
-                className="w-full bg-[#1E293B]/60 border border-slate-700/80 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-orange-500 transition"
+                className="w-full bg-white dark:bg-[#1E293B]/60 border border-slate-200 dark:border-slate-700/80 rounded-xl px-4 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500 transition transition-colors duration-300"
                 placeholder="e.g. 2 Years"
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-300">
+              <label className="text-xs font-semibold text-slate-600 dark:text-slate-300">
                 Gender <span className="text-orange-500">*</span>
               </label>
               <div className="relative">
                 <select
                   name="gender"
                   required
-                  className="w-full bg-[#1E293B]/60 border border-slate-700/80 rounded-xl px-4 py-2.5 text-sm text-white appearance-none focus:outline-none focus:border-orange-500 transition"
+                  className="w-full bg-white dark:bg-[#1E293B]/60 border border-slate-200 dark:border-slate-700/80 rounded-xl px-4 py-2.5 text-sm text-slate-900 dark:text-white appearance-none focus:outline-none focus:border-orange-500 transition transition-colors duration-300"
                 >
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
+                  <option value="Male" className="text-slate-900 dark:text-white bg-white dark:bg-[#111827]">Male</option>
+                  <option value="Female" className="text-slate-900 dark:text-white bg-white dark:bg-[#111827]">Female</option>
                 </select>
                 <ChevronDown
                   size={16}
@@ -166,52 +166,52 @@ const AddPetPage = () => {
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-300">
+              <label className="text-xs font-semibold text-slate-600 dark:text-slate-300">
                 Image URL <span className="text-orange-500">*</span>
               </label>
               <input
                 type="url"
                 name="imageUrl"
                 required
-                className="w-full bg-[#1E293B]/60 border border-slate-700/80 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-orange-500 transition font-mono text-xs"
+                className="w-full bg-white dark:bg-[#1E293B]/60 border border-slate-200 dark:border-slate-700/80 rounded-xl px-4 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500 transition font-mono text-xs transition-colors duration-300"
                 placeholder="https://example.com/pet.jpg"
               />
-              <p className="text-[11px] text-slate-500 pl-1">
+              <p className="text-[11px] text-slate-400 dark:text-slate-500 pl-1">
                 Add a clear image URL (JPG, PNG, WebP)
               </p>
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-slate-300">
+              <label className="text-xs font-semibold text-slate-600 dark:text-slate-300">
                 Health Status <span className="text-orange-500">*</span>
               </label>
               <div className="relative">
                 <select
                   name="healthStatus"
                   required
-                  className="w-full bg-[#1E293B]/60 border border-slate-700/80 rounded-xl pl-11 pr-10 py-2.5 text-sm text-emerald-400 font-medium appearance-none focus:outline-none focus:border-orange-500 transition"
+                  className="w-full bg-white dark:bg-[#1E293B]/60 border border-slate-200 dark:border-slate-700/80 rounded-xl pl-11 pr-10 py-2.5 text-sm text-emerald-600 dark:text-emerald-400 font-medium appearance-none focus:outline-none focus:border-orange-500 transition transition-colors duration-300"
                 >
                   <option
                     value="Healthy"
-                    className="text-emerald-400 bg-[#111827]"
+                    className="text-emerald-600 dark:text-emerald-400 bg-white dark:bg-[#111827]"
                   >
                     Healthy
                   </option>
                   <option
                     value="Vaccinated"
-                    className="text-emerald-400 bg-[#111827]"
+                    className="text-emerald-600 dark:text-emerald-400 bg-white dark:bg-[#111827]"
                   >
                     Vaccinated
                   </option>
                   <option
                     value="Needs Treatment"
-                    className="text-emerald-400 bg-[#111827]"
+                    className="text-rose-600 dark:text-rose-400 bg-white dark:bg-[#111827]"
                   >
                     Needs Treatment
                   </option>
                   <option
                     value="Under Medical Treatment"
-                    className="text-amber-400 bg-[#111827]"
+                    className="text-amber-600 dark:text-amber-400 bg-white dark:bg-[#111827]"
                   >
                     Under Treatment
                   </option>
@@ -231,30 +231,30 @@ const AddPetPage = () => {
           <div className="space-y-5 flex flex-col justify-between">
             <div className="space-y-5">
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-slate-300">
+                <label className="text-xs font-semibold text-slate-600 dark:text-slate-300">
                   Vaccination Status <span className="text-orange-500">*</span>
                 </label>
                 <div className="relative">
                   <select
                     name="vaccinationStatus"
                     required
-                    className="w-full bg-[#1E293B]/60 border border-slate-700/80 rounded-xl pl-11 pr-10 py-2.5 text-sm text-emerald-400 font-medium appearance-none focus:outline-none focus:border-orange-500 transition"
+                    className="w-full bg-white dark:bg-[#1E293B]/60 border border-slate-200 dark:border-slate-700/80 rounded-xl pl-11 pr-10 py-2.5 text-sm text-emerald-600 dark:text-emerald-400 font-medium appearance-none focus:outline-none focus:border-orange-500 transition transition-colors duration-300"
                   >
                     <option
                       value="Up to Date"
-                      className="text-emerald-400 bg-[#111827]"
+                      className="text-emerald-600 dark:text-emerald-400 bg-white dark:bg-[#111827]"
                     >
                       Up to Date
                     </option>
                     <option
                       value="Partially Vaccinated"
-                      className="text-amber-400 bg-[#111827]"
+                      className="text-amber-600 dark:text-amber-400 bg-white dark:bg-[#111827]"
                     >
                       Partially Vaccinated
                     </option>
                     <option
                       value="Not Vaccinated"
-                      className="text-rose-400 bg-[#111827]"
+                      className="text-rose-600 dark:text-rose-400 bg-white dark:bg-[#111827]"
                     >
                       Not Vaccinated
                     </option>
@@ -271,7 +271,7 @@ const AddPetPage = () => {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-slate-300">
+                <label className="text-xs font-semibold text-slate-600 dark:text-slate-300">
                   Location <span className="text-orange-500">*</span>
                 </label>
                 <div className="relative">
@@ -279,7 +279,7 @@ const AddPetPage = () => {
                     type="text"
                     name="location"
                     required
-                    className="w-full bg-[#1E293B]/60 border border-slate-700/80 rounded-xl pl-11 pr-4 py-2.5 text-sm text-white focus:outline-none focus:border-orange-500 transition"
+                    className="w-full bg-white dark:bg-[#1E293B]/60 border border-slate-200 dark:border-slate-700/80 rounded-xl pl-11 pr-4 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500 transition transition-colors duration-300"
                     placeholder="City, State"
                   />
                   <MapPin
@@ -290,24 +290,24 @@ const AddPetPage = () => {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-slate-300">
+                <label className="text-xs font-semibold text-slate-600 dark:text-slate-300">
                   Adoption Fee ($) <span className="text-orange-500">*</span>
                 </label>
                 <input
                   type="number"
                   name="adoptionFee"
                   required
-                  className="w-full bg-[#1E293B]/60 border border-slate-700/80 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-orange-500 transition"
+                  className="w-full bg-white dark:bg-[#1E293B]/60 border border-slate-200 dark:border-slate-700/80 rounded-xl px-4 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-orange-500 transition transition-colors duration-300"
                   placeholder="0"
                 />
               </div>
 
               <div className="space-y-1.5">
                 <div className="flex justify-between text-xs font-semibold">
-                  <label className="text-slate-300">
+                  <label className="text-slate-600 dark:text-slate-300">
                     Description <span className="text-orange-500">*</span>
                   </label>
-                  <span className="text-slate-500">/ 500</span>
+                  
                 </div>
                 <textarea
                   maxLength={500}
@@ -316,13 +316,13 @@ const AddPetPage = () => {
                   minLength={20}
                   placeholder="Tell us about the pet's personality, behavior, history..."
                   rows={4}
-                  className="w-full bg-[#1E293B]/60 border border-slate-700/80 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 transition resize-none"
+                  className="w-full bg-white dark:bg-[#1E293B]/60 border border-slate-200 dark:border-slate-700/80 rounded-xl px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-orange-500 transition resize-none transition-colors duration-300"
                 />
               </div>
             </div>
 
             <div className="space-y-1.5 pt-2">
-              <label className="text-xs font-semibold text-slate-400">
+              <label className="text-xs font-semibold text-slate-500 dark:text-slate-400">
                 Owner Email
               </label>
               <div className="relative">
@@ -331,23 +331,23 @@ const AddPetPage = () => {
                   name="ownerEmail"
                   value={user?.email || 'Your Email'}
                   disabled
-                  className="w-full bg-[#1E293B]/30 border border-slate-800/80 text-slate-500 rounded-xl pl-4 pr-11 py-2.5 text-sm cursor-not-allowed"
+                  className="w-full bg-slate-50 dark:bg-[#1E293B]/30 border border-slate-200 dark:border-slate-800/80 text-slate-400 dark:text-slate-500 rounded-xl pl-4 pr-11 py-2.5 text-sm cursor-not-allowed transition-colors duration-300"
                 />
                 <Lock
                   size={14}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-600"
                 />
               </div>
-              <p className="text-[11px] text-slate-600 pl-1">
+              <p className="text-[11px] text-slate-400 dark:text-slate-600 pl-1">
                 This is the email associated with your account.
               </p>
             </div>
           </div>
 
-          <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-800/60 mt-2">
+          <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-200 dark:border-slate-800/60 mt-2">
             <button
               type="reset"
-              className="sm:col-span-1 px-6 py-3 rounded-xl border border-slate-800 bg-[#1E293B]/50 font-semibold text-slate-300 hover:text-white hover:bg-slate-800/80 transition flex items-center justify-center gap-2 active:scale-[0.98]"
+              className="sm:col-span-1 px-6 py-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#1E293B]/50 font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/80 transition flex items-center justify-center gap-2 active:scale-[0.98] transition-colors duration-300"
             >
               <RotateCcw size={16} /> Reset Form
             </button>

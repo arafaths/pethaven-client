@@ -151,12 +151,7 @@ export default function Navbar() {
                     Dashboard
                   </Link>
 
-                  <Link
-                    href="/settings"
-                    className="block px-4 py-2.5 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-black dark:hover:text-white transition-all duration-300"
-                  >
-                    Settings
-                  </Link>
+                  
 
                   <button
                     onClick={handleLogout}
