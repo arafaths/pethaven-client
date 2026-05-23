@@ -33,20 +33,16 @@ export default function Nav() {
 
   const menuItems = [
     {
-      name: 'My Listings',
-      href: '/dashboard/my-listings',
-      icon: NotebookTabs,
-    },
-    {
       name: 'My Requests',
       href: '/dashboard/my-requests',
       icon: FileText,
     },
     {
-      name: 'Favorites',
-      href: '/dashboard/favorites',
-      icon: Heart,
+      name: 'My Listings',
+      href: '/dashboard/my-listings',
+      icon: NotebookTabs,
     },
+    
     {
       name: 'Add Pet',
       href: '/dashboard/add-pet',

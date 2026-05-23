@@ -9,13 +9,13 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   const menuItems = [
-    { name: 'My Listings', icon: NotebookTabs, href: '/dashboard/my-listings' },
     {
       name: 'My Requests',
       icon: FileText,
       href: '/dashboard/my-requests',
     },
-    { name: 'Favorites', icon: Heart, href: '/dashboard/favorites' },
+    { name: 'My Listings', icon: NotebookTabs, href: '/dashboard/my-listings' },
+    
     { name: 'Add Pet', icon: Plus, href: '/dashboard/add-pet' },
   ];
 
