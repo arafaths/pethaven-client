@@ -1,4 +1,4 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, BookOpen, Calendar } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
 
@@ -34,58 +34,63 @@ const PetCareTips = () => {
   ];
 
   return (
-    <section className="bg-[#121212] text-white py-8 sm:py-16 px-3 sm:px-6 md:px-12 lg:px-24">
-      <div className="max-w-7xl mx-auto">
-        {/* Header Section */}
-        <div className="flex justify-between items-center mb-10">
-          <div className="flex items-center gap-2">
-            <span className="text-[#FF7A00] text-xl">🐾</span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
-              Pet Care Tips
-            </h2>
+    <section className="bg-[#F8FAFC] text-[#0F172A] dark:bg-[#121212] dark:text-white py-12 sm:py-20 px-4 sm:px-6 md:px-12 lg:px-24 transition-colors duration-300 relative overflow-hidden">
+      {/* Subtle background blur accent */}
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-orange-500/5 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Header Title Section */}
+        <div className="flex flex-col items-center md:items-start gap-2 text-center md:text-left mb-12">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-orange-500/10 text-orange-600 dark:text-orange-400 text-xs font-bold tracking-wider uppercase mb-1">
+            Resources
           </div>
-          
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#0F172A] dark:text-white">
+            Pet Care <span className="text-orange-500">Tips</span>
+          </h2>
         </div>
 
-        {/* Cards Grid (First Image Layout) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Cards Responsive Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {tips.map(item => (
             <div
               key={item.id}
-              className="bg-[#12141C] border border-[#1F2431] rounded-2xl overflow-hidden hover:border-[#FF7A00]/40 transition-all duration-300 group flex flex-col"
+              className="bg-white dark:bg-[#1A1F2C] border border-slate-200/80 dark:border-zinc-800/80 rounded-2xl overflow-hidden hover:border-orange-500/40 dark:hover:border-orange-500/30 shadow-sm hover:shadow-md dark:shadow-none transition-all duration-300 group flex flex-col h-full"
             >
-              {/* Top Side: Full Width Image */}
-              <div className="h-48 w-full relative overflow-hidden bg-gray-800">
+              {/* Top Image Frame with Layout Fill fixes */}
+              <div className="h-48 w-full relative overflow-hidden bg-slate-100 dark:bg-zinc-900 shrink-0">
                 <Image
                   src={item.image}
                   alt={item.title}
-                  width={100}
-                  height={100}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  fill
+                  sizes="(max-w-7xl) 33vw, 100vw"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-104"
                 />
 
-                {/* Category Badge over Image */}
-                <span className="absolute top-4 left-4 text-[10px] font-bold uppercase tracking-wider bg-[#FF7A00] text-white px-2.5 py-1 rounded-md shadow-md">
+                {/* Category Badge Layer over Image */}
+                <span className="absolute top-4 left-4 text-[10px] font-extrabold uppercase tracking-wider bg-orange-500 text-white px-2.5 py-1 rounded-md shadow-md">
                   {item.category}
                 </span>
               </div>
 
-              {/* Bottom Side: Content Area */}
-              <div className="p-5 flex flex-col justify-between flex-1">
-                <div>
-                  {/* Title */}
-                  <h3 className="font-bold text-base text-gray-100 group-hover:text-[#FF7A00] transition-colors duration-200 line-clamp-2 leading-snug mb-4">
+              {/* Bottom Info Content Layout Box */}
+              <div className="p-5 flex flex-col justify-between flex-grow space-y-5">
+                <div className="space-y-2.5">
+                  <h3 className="font-bold text-base sm:text-lg text-slate-900 dark:text-white group-hover:text-orange-500 dark:group-hover:text-orange-400 transition-colors duration-200 line-clamp-2 leading-snug">
                     {item.title}
                   </h3>
                 </div>
 
-                {/* Card Footer: Date & Read Time */}
-                <div className="flex items-center justify-between text-xs text-gray-500 pt-3 border-t border-[#1F2431]/60">
-                  <span>{item.date}</span>
-                  <span className="flex items-center gap-1">
-                    <span className="w-1 h-1 bg-gray-600 rounded-full"></span>
-                    {item.readTime}
-                  </span>
+                {/* Card Footer Meta Data */}
+                <div className="flex items-center justify-between text-xs font-semibold text-slate-400 dark:text-zinc-500 pt-3 border-t border-slate-100 dark:border-zinc-800/60">
+                  <div className="flex items-center gap-1">
+                    <Calendar className="w-3.5 h-3.5 text-slate-400 dark:text-zinc-500" />
+                    <span>{item.date}</span>
+                  </div>
+
+                  <div className="flex items-center gap-1">
+                    <BookOpen className="w-3.5 h-3.5 text-slate-400 dark:text-zinc-500" />
+                    <span>{item.readTime}</span>
+                  </div>
                 </div>
               </div>
             </div>

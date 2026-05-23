@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import Image from 'next/image';
 
 const SuccessStories = () => {
@@ -9,7 +9,7 @@ const SuccessStories = () => {
       image:
         'https://i.pinimg.com/736x/38/b9/eb/38b9eb1060f0a888ded9918b10527e7b.jpg',
       quote:
-        '"Adopting Bella was the best decision I\'ve ever made. She\'s my shadow and my joy."',
+        "Adopting Bella was the best decision I've ever made. She's my shadow and my joy.",
     },
     {
       id: 2,
@@ -17,76 +17,80 @@ const SuccessStories = () => {
       image:
         'https://i.pinimg.com/736x/c7/21/9d/c7219d347dda7b4d58652aa6daa7c180.jpg',
       quote:
-        '"Charlie came into our lives and filled our home with happiness and laughter."',
+        'Charlie came into our lives and filled our home with happiness and laughter.',
     },
     {
       id: 3,
       name: 'Priya K.',
       image:
         'https://i.pinimg.com/236x/79/53/e2/7953e2ba9e76b4c9bbea81d99a057fda.jpg',
-      quote: '"Milo is not just a pet, he\'s family. Thank you PawHaven!"',
+      quote: "Milo is not just a pet, he's family. Thank you PawHaven!",
     },
   ];
 
   return (
-    <section className="bg-[#121212] text-white py-8 sm:py-16 px-3 sm:px-6 md:px-12 lg:px-24">
-      <div className="max-w-7xl mx-auto">
-        {/* Header Section */}
-        <div className="flex justify-between items-center mb-10">
-          <div className="flex items-center gap-2">
-            <span className="text-[#FF7A00] text-xl">🐾</span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
-              Success Stories
-            </h2>
+    <section className="bg-[#F8FAFC] text-[#0F172A] dark:bg-[#121212] dark:text-white py-12 sm:py-20 px-4 sm:px-6 md:px-12 lg:px-24 transition-colors duration-300 relative overflow-hidden">
+      {/* Subtle Background Radial Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] bg-orange-500/5 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Header Title Section */}
+        <div className="flex flex-col items-center md:items-start gap-2 text-center md:text-left mb-12">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-orange-500/10 text-orange-600 dark:text-orange-400 text-xs font-bold tracking-wider uppercase mb-1">
+            Updates
           </div>
-         
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#0F172A] dark:text-white">
+            Success <span className="text-orange-500">Stories</span>
+          </h2>
         </div>
 
-        {/* Carousel / Slider Container */}
-        <div className="relative flex items-center">
-          {/* Left Arrow */}
-          <button className="absolute -left-5 z-10 w-10 h-10 flex items-center justify-center bg-[#12141C] border border-[#262B3C] rounded-full shadow-lg hover:bg-[#1f2331] text-[#FF7A00] transition-colors hidden md:flex">
-            <ChevronLeft size={20} />
+        {/* Slider Navigation Wrapper Container */}
+        <div className="relative flex items-center group/slider">
+          {/* Left Arrow Button Controls */}
+          <button className="absolute -left-5 lg:-left-6 z-20 w-10 h-10 flex items-center justify-center bg-white dark:bg-[#1A1F2C] border border-slate-200 dark:border-zinc-800 rounded-full shadow-md hover:bg-slate-50 dark:hover:bg-zinc-800 text-orange-500 dark:text-orange-400 transition-all duration-200 active:scale-95 opacity-0 group-hover/slider:opacity-100 hidden md:flex">
+            <ChevronLeft size={18} strokeWidth={2.5} />
           </button>
 
-          {/* Cards Grid (Horizontal Layout like First Image) */}
+          {/* Cards Flex Grid Responsive Structure */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
             {stories.map(story => (
               <div
                 key={story.id}
-                className="flex items-center gap-4 bg-[#12141C] border border-[#1F2431] rounded-2xl hover:border-[#FF7A00]/50 transition-all duration-300 group"
+                className="flex items-stretch bg-white dark:bg-[#1A1F2C] border border-slate-200/80 dark:border-zinc-800/80 rounded-2xl overflow-hidden hover:border-orange-500/40 dark:hover:border-orange-500/30 shadow-sm hover:shadow-md dark:shadow-none transition-all duration-300 group"
               >
-                {/* Left Side: Profile Image */}
-                <div className="w-35 h-full rounded-2xl overflow-hidden flex-shrink-0 bg-gray-800">
+                {/* Profile Image Column Layer */}
+                <div className="w-28 sm:w-32 min-h-[140px] relative overflow-hidden flex-shrink-0 bg-slate-100 dark:bg-zinc-900">
                   <Image
                     src={story.image}
                     alt={story.name}
-                    width={200}
-                    height={200}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    fill
+                    sizes="(max-w-7xl) 200px"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
                 </div>
 
-                {/* Right Side: Content */}
-                <div className="flex flex-col justify-center flex-1 p-5">
-                  <p className="text-gray-400 text-xs sm:text-sm leading-relaxed italic mb-2 line-clamp-3">
+                {/* Meta Description Text Content Box */}
+                <div className="flex flex-col justify-center flex-1 p-4 sm:p-5 relative">
+                  {/* Subtle quote background icon effect */}
+                  <Quote className="absolute top-2 right-3 w-8 h-8 text-slate-100 dark:text-zinc-800/40 pointer-events-none transform rotate-180" />
+
+                  <p className="text-slate-600 dark:text-zinc-400 text-xs sm:text-sm leading-relaxed italic mb-2 line-clamp-3 font-medium relative z-10">
                     {story.quote}
                   </p>
-                  <span className="text-gray-200 font-semibold text-xs sm:text-sm">
-                    – {story.name}
+
+                  <span className="text-slate-900 dark:text-zinc-200 font-bold text-xs sm:text-sm block">
+                    — {story.name}
                   </span>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Right Arrow */}
-          <button className="absolute -right-5 z-10 w-10 h-10 flex items-center justify-center bg-[#12141C] border border-[#262B3C] rounded-full shadow-lg hover:bg-[#1f2331] text-[#FF7A00] transition-colors hidden md:flex">
-            <ChevronRight size={20} />
+          {/* Right Arrow Button Controls */}
+          <button className="absolute -right-5 lg:-right-6 z-20 w-10 h-10 flex items-center justify-center bg-white dark:bg-[#1A1F2C] border border-slate-200 dark:border-zinc-800 rounded-full shadow-md hover:bg-slate-50 dark:hover:bg-zinc-800 text-orange-500 dark:text-orange-400 transition-all duration-200 active:scale-95 opacity-0 group-hover/slider:opacity-100 hidden md:flex">
+            <ChevronRight size={18} strokeWidth={2.5} />
           </button>
         </div>
-
-        
       </div>
     </section>
   );

@@ -46,7 +46,7 @@ export default function Navbar() {
     await authClient.signOut();
   }
   return (
-    <nav className="sticky top-0 z-60 bg-white dark:bg-[#0B0F19] border-b border-gray-200 dark:border-gray-800 text-black dark:text-white px-2 sm:px-6 py-2 sm:py-4 backdrop-blur-xl transition-all duration-300">
+    <nav className="sticky top-0 z-60 bg-gray-50 dark:bg-[#0B0F19] border-b border-gray-200 dark:border-gray-800 text-black dark:text-white px-2 sm:px-6 py-2 sm:py-4 backdrop-blur-xl transition-all duration-300">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <Link

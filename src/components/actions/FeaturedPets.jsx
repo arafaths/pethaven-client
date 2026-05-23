@@ -1,7 +1,4 @@
-import {
-  Heart,
-  ArrowRight,
-} from 'lucide-react';
+import { Heart, ArrowRight } from 'lucide-react';
 import PetCard from './PetCard';
 import Link from 'next/link';
 
@@ -12,53 +9,48 @@ const FeaturedPets = async () => {
   const pets = await res.json();
 
   return (
-    <section className="min-h-screen bg-[#121212] text-white py-8 sm:py-16 px-2 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden">
-      {/* Background Glow */}
-      <div className="absolute top-20 left-1/4 w-72 h-72 bg-orange-500/10 blur-[120px] rounded-full" />
-      <div className="absolute bottom-20 right-1/4 w-72 h-72 bg-amber-500/10 blur-[120px] rounded-full" />
+    <section className="min-h-screen bg-[#F8FAFC] text-[#0F172A] dark:bg-[#121212] dark:text-white py-12 sm:py-20 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden transition-colors duration-300">
+      <div className="absolute top-20 left-1/4 w-72 h-72 bg-orange-500/10 dark:bg-orange-500/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-20 right-1/4 w-72 h-72 bg-amber-500/10 dark:bg-amber-500/5 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Top Badge */}
-        <div className="flex justify-center mb-5">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-orange-500/20 bg-orange-500/5 text-orange-400 text-sm">
-            <Heart className="w-4 h-4" />
-            They’re waiting for you
-            <ArrowRight className="w-4 h-4" />
+        <div className="flex justify-center mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-orange-500/20 bg-white dark:bg-orange-500/5 text-orange-600 dark:text-orange-400 text-xs font-bold uppercase tracking-wider shadow-sm">
+            <Heart className="w-3.5 h-3.5 fill-currentColor" />
+            <span>They’re waiting for you</span>
+            <ArrowRight className="w-3.5 h-3.5" />
           </div>
         </div>
 
-        {/* Heading */}
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-6xl font-bold tracking-tight mb-4">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 text-[#0F172A] dark:text-white">
             Meet Our{' '}
-            <span className="bg-gradient-to-r from-orange-400 to-amber-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
               Featured Pets
             </span>
           </h2>
 
-          <p className="text-gray-400 text-lg max-w-xl mx-auto">
-            Find your perfect companion and give them a loving home 🧡
+          <p className="text-slate-600 dark:text-zinc-400 text-base md:text-lg max-w-xl mx-auto font-medium">
+            Find your perfect companion and give them a loving home.
           </p>
         </div>
 
-        {/* Pet Cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {pets.slice(0, 6).map(pet => (
             <PetCard key={pet._id} pet={pet} />
           ))}
         </div>
 
-        {/* View All Button */}
-        <div className="flex flex-col items-center mt-14">
+        <div className="flex flex-col items-center mt-16">
           <Link href={'/all-pets'}>
-            <button className="px-8 py-3 rounded-full border border-gray-700 text-gray-200 hover:bg-[#1b2230] transition flex items-center gap-3">
-              View All Pets
-              <ArrowRight className="w-4 h-4" />
+            <button className="px-8 py-3.5 rounded-full border border-slate-200 dark:border-zinc-800 text-slate-700 dark:text-zinc-200 bg-white dark:bg-zinc-900/40 hover:bg-slate-50 dark:hover:bg-zinc-900 transition-all duration-300 flex items-center gap-3 font-bold text-sm shadow-sm active:scale-98">
+              <span>View All Pets</span>
+              <ArrowRight className="w-4 h-4 text-orange-500" />
             </button>
           </Link>
 
-          <p className="text-gray-500 text-sm mt-5 flex items-center gap-2">
-            <Heart className="w-4 h-4 text-orange-400" />
+          <p className="text-slate-500 dark:text-zinc-500 text-xs md:text-sm mt-6 flex items-center gap-2 font-medium">
+            <Heart className="w-4 h-4 text-orange-500 fill-currentColor" />
             Every adoption changes two lives.
           </p>
         </div>
