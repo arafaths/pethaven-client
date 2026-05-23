@@ -19,7 +19,7 @@ const EditModal = ({ selectePet, setOpen, setPets }) => {
     };
 
     const res = await fetch(
-      `http://localhost:5000/all-pets/${selectePet._id}`,
+      `${process.env.NEXT_URL}/all-pets/${selectePet._id}`,
       {
         method: 'PATCH',
         headers: {

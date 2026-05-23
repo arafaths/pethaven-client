@@ -20,8 +20,15 @@ import Link from 'next/link';
 
 const PetDetails = async ({ params }) => {
   const { id } = await params;
-
-  const res = await fetch(`http://localhost:5000/all-pets/${id}`);
+  const {token} = await auth.api.getToken({
+    headers: await headers()
+  })
+ 
+  const res = await fetch(`${process.env.NEXT_URL}/all-pets/${id}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
   const pet = await res.json();
   const {
     imageUrl,

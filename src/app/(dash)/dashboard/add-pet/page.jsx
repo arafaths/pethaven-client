@@ -33,7 +33,7 @@ const AddPetPage = () => {
       createdAt: new Date(),
     };
 
-    const res = await fetch('http://localhost:5000/all-pets', {
+    const res = await fetch(`${process.env.NEXT_URL}/all-pets`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',

@@ -26,7 +26,7 @@ const Form = ({ pet, user }) => {
       pickupDate: formInfo.date,
     };
 
-    const res = await fetch('http://localhost:5000/adopt-request', {
+    const res = await fetch(`${process.env.NEXT_URL}/adopt-request`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

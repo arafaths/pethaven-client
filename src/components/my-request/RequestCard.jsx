@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 
 const RequestCard = ({ row, setRequests }) => {
   const handleDelete = async id => {
-    const res = await fetch(`http://localhost:5000/my-requests/${id}`, {
+    const res = await fetch(`${process.env.NEXT_URL}/my-requests/${id}`, {
       method: 'DELETE',
     });
 

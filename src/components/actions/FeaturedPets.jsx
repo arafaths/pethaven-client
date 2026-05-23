@@ -3,7 +3,7 @@ import PetCard from './PetCard';
 import Link from 'next/link';
 
 const FeaturedPets = async () => {
-  const res = await fetch('http://localhost:5000/all-pets', {
+  const res = await fetch(`${process.env.NEXT_URL}/all-pets`, {
     cache: 'no-store',
   });
   const pets = await res.json();
