@@ -42,7 +42,7 @@ const MyListingsPage = () => {
         setLoading(true);
 
         const res = await fetch(
-          `${process.env.NEXT_URL}/my-pets?email=${user.email}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/my-pets?email=${user.email}`,
         );
 
         const data = await res.json();
@@ -89,7 +89,7 @@ const MyListingsPage = () => {
   useEffect(() => {
     if (!selectedPet?._id) return;
 
-    fetch(`${process.env.NEXT_URL}/pet-requests/${selectedPet._id}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/pet-requests/${selectedPet._id}`)
       .then(res => res.json())
       .then(data => setRequests(data));
   }, [selectedPet]);
@@ -105,9 +105,12 @@ const MyListingsPage = () => {
   };
 
   const handleDelete = async id => {
-    const res = await fetch(`${process.env.NEXT_URL}/all-pets/${id}`, {
-      method: 'DELETE',
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/all-pets/${id}`,
+      {
+        method: 'DELETE',
+      },
+    );
 
     const data = await res.json();
 
@@ -131,7 +134,7 @@ const MyListingsPage = () => {
 
   const handleApprove = async requestId => {
     const res = await fetch(
-      `${process.env.NEXT_URL}/adoption-request/${requestId}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/adoption-request/${requestId}`,
       {
         method: 'PATCH',
         headers: {
@@ -169,7 +172,7 @@ const MyListingsPage = () => {
 
   const handleReject = async requestId => {
     const res = await fetch(
-      `${process.env.NEXT_URL}/adoption-request/${requestId}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/adoption-request/${requestId}`,
       {
         method: 'PATCH',
         headers: {

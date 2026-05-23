@@ -24,7 +24,7 @@ const PetDetails = async ({ params }) => {
     headers: await headers()
   })
  
-  const res = await fetch(`${process.env.NEXT_URL}/all-pets/${id}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/all-pets/${id}`, {
     headers: {
       authorization: `Bearer ${token}`,
     },

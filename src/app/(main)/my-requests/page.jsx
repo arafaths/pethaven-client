@@ -29,7 +29,7 @@ const MyRequestsPage = () => {
       if (!user?.email) return;
 
       const res = await fetch(
-        `${process.env.NEXT_URL}/my-requests?email=${user.email}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/my-requests?email=${user.email}`,
       );
 
       const data = await res.json();

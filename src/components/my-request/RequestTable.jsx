@@ -6,9 +6,12 @@ import toast from 'react-hot-toast';
 
 const RequestTable = ({ row, setRequests }) => {
   const handleDelete = async id => {
-    const res = await fetch(`${process.env.NEXT_URL}/my-requests/${id}`, {
-      method: 'DELETE',
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/my-requests/${id}`,
+      {
+        method: 'DELETE',
+      },
+    );
 
     const data = await res.json();
     console.log(data);
